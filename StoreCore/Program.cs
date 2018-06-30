@@ -9,7 +9,7 @@ namespace StoreCore
         {
             configure();
             Console.WriteLine("Welcome to our store!\r\nHow can we help you?");
-            Console.WriteLine("Commands: exit, list-products, add-product, delete-product, edit-product.");
+            Console.WriteLine("Commands: exit, list-products, show-product, add-product, delete-product, edit-product.");
 
             while (true)
             {
@@ -20,6 +20,9 @@ namespace StoreCore
 
                 if (input == "list-products")
                     listProducts();
+
+                if (input == "show-product")
+                    showProduct();
 
                 if (input == "delete-product")
                     deleteProduct();
@@ -46,6 +49,13 @@ namespace StoreCore
         static void listProducts()
         {
             Product.list();
+        }
+
+        static void showProduct()
+        {
+            Console.WriteLine("Please provide product id.");
+            int productId = int.Parse(Console.ReadLine());
+            Product.show(productId);
         }
 
         static void deleteProduct()

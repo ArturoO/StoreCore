@@ -69,6 +69,28 @@ namespace StoreCore
             }
         }
 
+        public static void show(int Id)
+        {
+            using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendFormat("SELECT * FROM Products WHERE Id={0}", Id);
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Id: {reader[0]}");
+                        Console.WriteLine($"Name: {reader[1]}");
+                        Console.WriteLine($"Price: {reader[3]}");
+                        Console.WriteLine($"Category: {reader[4]}");
+                        Console.WriteLine($"Description:\r\n{reader[2]}");
+                    }
+                }
+            }
+        }
+
         public static bool delete(int Id)
         {
             using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
