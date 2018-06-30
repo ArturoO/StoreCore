@@ -42,23 +42,5 @@ namespace StoreCore
             ProductUI.registerCommands(ref commandsMap);
         }
 
-
-        static void testDb()
-        {
-            using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
-            {
-                client.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Products", client);
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        Console.WriteLine($"{reader[0]}:{reader[1]}");
-                    }
-                }
-
-            }
-        }
-
     }
 }
