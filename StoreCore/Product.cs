@@ -26,5 +26,24 @@ namespace StoreCore
                     return false;                
             }
         }
+
+        public static void list()
+        {
+            using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendLine("SELECT * FROM Products");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader[0]}:{reader[1]} ${reader[2]} ${reader[3]} ${reader[4]}");
+                    }
+                }
+            }
+        }
+
     }
 }

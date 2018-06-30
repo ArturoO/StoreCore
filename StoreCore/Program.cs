@@ -18,6 +18,9 @@ namespace StoreCore
                 if (input == "add-product")
                     addProduct();
 
+                if (input == "list-products")
+                    listProducts();
+
                 if (input == "exit")
                     break;
 
@@ -32,6 +35,11 @@ namespace StoreCore
             System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        }
+
+        static void listProducts()
+        {
+            Product.list();
         }
 
         static void addProduct()
