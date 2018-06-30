@@ -27,6 +27,24 @@ namespace StoreCore
             }
         }
 
+        public static bool edit(int Id, string name, string description, decimal price, string category)
+        {
+            using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append("UPDATE Products ");
+                sbCmd.AppendFormat("SET name='{0}', description='{1}', price={2}, category='{3}' ", name, description, price, category);
+                sbCmd.AppendFormat("WHERE Id = {0} ", Id);
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                int result = cmd.ExecuteNonQuery();
+                if (result == 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         public static void list()
         {
             using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
@@ -39,7 +57,7 @@ namespace StoreCore
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine($"{reader[0]}:{reader[1]} ${reader[2]} ${reader[3]} ${reader[4]}");
+                        Console.WriteLine($"{reader[0]}:{reader[1]} {reader[2]} {reader[3]} {reader[4]}");
                     }
                 }
             }

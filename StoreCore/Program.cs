@@ -9,7 +9,7 @@ namespace StoreCore
         {
             configure();
             Console.WriteLine("Welcome to our store!\r\nHow can we help you?");
-            Console.WriteLine("Commands: exit, list-products, add-product, delete-product, show-product.");
+            Console.WriteLine("Commands: exit, list-products, add-product, delete-product, edit-product.");
 
             while (true)
             {
@@ -23,6 +23,9 @@ namespace StoreCore
 
                 if (input == "delete-product")
                     deleteProduct();
+
+                if (input == "edit-product")
+                    editProduct();
 
                 if (input == "exit")
                     break;
@@ -74,6 +77,28 @@ namespace StoreCore
                 Console.WriteLine("Product not added.");
 
         }
+
+        static void editProduct()
+        {
+            Console.WriteLine("Please provide product Id.");
+            int productId = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please provide product name.");
+            String productName = Console.ReadLine();
+            Console.WriteLine("Please provide product description.");
+            String productDescription = Console.ReadLine();
+            Console.WriteLine("Please provide product price.");
+            decimal productPrice = Decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Please provide product category.");
+            String productCategory = Console.ReadLine();
+
+            bool result = Product.edit(productId, productName, productDescription, productPrice, productCategory);
+            if (result)
+                Console.WriteLine("Product changed.");
+            else
+                Console.WriteLine("Product not changed.");
+
+        }
+
 
         static void testDb()
         {
