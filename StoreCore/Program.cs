@@ -7,7 +7,6 @@ namespace StoreCore
 {
     class Program
     {
-
         protected static Dictionary<string, Action> commandsMap;
 
         static void Main(string[] args)
@@ -38,9 +37,9 @@ namespace StoreCore
 
             commandsMap = new Dictionary<string, Action>();
             ProductUI.registerCommands(ref commandsMap);
+            UserUI.registerCommands(ref commandsMap);
 
             commandsMap.Add("help", listCommands);
-
         }
 
         static void listCommands()
