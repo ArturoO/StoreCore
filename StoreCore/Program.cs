@@ -21,6 +21,9 @@ namespace StoreCore
                 if (input == "list-products")
                     listProducts();
 
+                if (input == "delete-product")
+                    deleteProduct();
+
                 if (input == "exit")
                     break;
 
@@ -40,6 +43,17 @@ namespace StoreCore
         static void listProducts()
         {
             Product.list();
+        }
+
+        static void deleteProduct()
+        {
+            Console.WriteLine("Please provide product id.");
+            int productId = int.Parse(Console.ReadLine());
+            bool result = Product.delete(productId);
+            if(result)
+                Console.WriteLine("Product deleted.");
+            else
+                Console.WriteLine("Product not deleted.");
         }
 
         static void addProduct()

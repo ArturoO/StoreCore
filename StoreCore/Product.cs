@@ -45,5 +45,21 @@ namespace StoreCore
             }
         }
 
+        public static bool delete(int Id)
+        {
+            using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendFormat("DELETE FROM Products WHERE Id = {0}", Id);
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                int result = cmd.ExecuteNonQuery();
+                if (result == 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
     }
 }
