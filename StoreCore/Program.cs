@@ -1,0 +1,74 @@
+﻿using System;
+using System.Data.SqlClient;
+
+namespace StoreCore
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            configure();
+            Console.WriteLine("Welcome to our store!\r\nHow can we help you?");
+            Console.WriteLine("Commands: exit, list-products, add-product, delete-product, show-product.");
+
+            while (true)
+            {
+                String input = Console.ReadLine();
+
+                if (input == "add-product")
+                    addProduct();
+
+                if (input == "exit")
+                    break;
+
+                Console.WriteLine("Please specify a command.");
+                Console.WriteLine("Commands: exit, list-products, add-product, delete-product, show-product.");
+            }
+
+        }
+
+        static void configure()
+        {
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        }
+
+        static void addProduct()
+        {
+            Console.WriteLine("Please provide product name.");
+            String productName = Console.ReadLine();
+            Console.WriteLine("Please provide product description.");
+            String productDescription = Console.ReadLine();
+            Console.WriteLine("Please provide product price.");
+            decimal productPrice = Decimal.Parse(Console.ReadLine());
+            Console.WriteLine("Please provide product category.");
+            String productCategory = Console.ReadLine();
+
+            bool result = Product.add(productName, productDescription, productPrice, productCategory);
+            if (result)
+                Console.WriteLine("Product added.");
+            else
+                Console.WriteLine("Product not added.");
+
+        }
+
+        static void testDb()
+        {
+            using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
+            {
+                client.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Products", client);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{reader[0]}:{reader[1]}");
+                    }
+                }
+
+            }
+        }
+
+    }
+}
