@@ -51,13 +51,19 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendLine("SELECT * FROM Products");
+                sbCmd.AppendLine("SELECT Id, name, price, category FROM Products");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
                 using (var reader = cmd.ExecuteReader())
                 {
+                    Console.WriteLine("-------------------------------------------");
+                    Console.WriteLine(" Id    | Name      | Price     | Category  ");
+                    Console.WriteLine("-------------------------------------------");
+
                     while (reader.Read())
                     {
-                        Console.WriteLine($"{reader[0]}:{reader[1]} {reader[2]} {reader[3]} {reader[4]}");
+                        Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}", 
+                            reader[0], reader[1], reader[2], reader[3]));
+                        Console.WriteLine("-------------------------------------------");
                     }
                 }
             }
