@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text;
 
 namespace StoreCore
 {
@@ -13,7 +14,7 @@ namespace StoreCore
         {
             configure();
             Console.WriteLine("Welcome to our store!\r\nHow can we help you?");
-            Console.WriteLine("Commands: exit, list-products, show-product, add-product, delete-product, edit-product.");
+            Console.WriteLine("To display a list of all available commands type: help");
 
             while (true)
             {
@@ -25,9 +26,6 @@ namespace StoreCore
                     commandsMap[input]();
                 else
                     Console.WriteLine("Incorrect command.");
-                
-                Console.WriteLine("Please specify a command.");
-                Console.WriteLine("Commands: exit, list-products, add-product, delete-product, show-product.");
             }
 
         }
@@ -40,6 +38,16 @@ namespace StoreCore
 
             commandsMap = new Dictionary<string, Action>();
             ProductUI.registerCommands(ref commandsMap);
+
+            commandsMap.Add("help", listCommands);
+
+        }
+
+        static void listCommands()
+        {
+            List<string> keys = new List<string>(commandsMap.Keys);
+            var commands = String.Join(", ", keys.ToArray());
+            Console.WriteLine(commands);
         }
 
     }
