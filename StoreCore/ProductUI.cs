@@ -17,14 +17,30 @@ namespace StoreCore
 
         static void listProducts()
         {
-            ProductDb.list();
+            List<Product> products = ProductDb.list();
+
+            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine(" Id    | Name      | Price     | Category  ");
+            Console.WriteLine("-------------------------------------------");
+            foreach (var product in products)
+            {
+                Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}",
+                product.Id, product.Name, product.Price, product.Category));
+                Console.WriteLine("-------------------------------------------");
+            }
         }
 
         static void showProduct()
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            ProductDb.show(productId);
+            Product product = ProductDb.show(productId);
+
+            Console.WriteLine($"Id: {product.Id}");
+            Console.WriteLine($"Name: {product.Name}");
+            Console.WriteLine($"Price: {product.Price}");
+            Console.WriteLine($"Category: {product.Category}");
+            Console.WriteLine($"Description:\r\n{product.Description}");
         }
 
         static void deleteProduct()

@@ -7,8 +7,7 @@ namespace StoreCore
 {
     class ProductDb
     {
-
-
+        
         public static bool add(string name, string description, decimal price, string category)
         {
             using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
@@ -45,32 +44,35 @@ namespace StoreCore
             }
         }
 
-        public static void list()
+        public static List<Product> list()
         {
+            List<Product> products = new List<Product>();
             using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendLine("SELECT Id, name, price, category FROM Products");
+                sbCmd.AppendLine("SELECT * FROM Products");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
                 using (var reader = cmd.ExecuteReader())
                 {
-                    Console.WriteLine("-------------------------------------------");
-                    Console.WriteLine(" Id    | Name      | Price     | Category  ");
-                    Console.WriteLine("-------------------------------------------");
-
                     while (reader.Read())
                     {
-                        Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}", 
-                            reader[0], reader[1], reader[2], reader[3]));
-                        Console.WriteLine("-------------------------------------------");
+                        int id = int.Parse(reader[0].ToString());
+                        string name = reader[1].ToString();
+                        string description = reader[2].ToString();
+                        decimal price = decimal.Parse(reader[3].ToString());
+                        string category = reader[4].ToString();
+
+                        products.Add(new Product(id, name, description, price, category));
                     }
                 }
             }
+            return products;
         }
 
-        public static void show(int Id)
+        public static Product show(int Id)
         {
+            Product product = new Product();
             using (var client = new SqlConnection("Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False"))
             {
                 client.Open();
@@ -81,14 +83,15 @@ namespace StoreCore
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Id: {reader[0]}");
-                        Console.WriteLine($"Name: {reader[1]}");
-                        Console.WriteLine($"Price: {reader[3]}");
-                        Console.WriteLine($"Category: {reader[4]}");
-                        Console.WriteLine($"Description:\r\n{reader[2]}");
+                        product.Id = int.Parse(reader[0].ToString());
+                        product.Name = reader[1].ToString();
+                        product.Description = reader[2].ToString();
+                        product.Price = decimal.Parse(reader[3].ToString());
+                        product.Category = reader[4].ToString();
                     }
                 }
             }
+            return product;
         }
 
         public static bool delete(int Id)

@@ -24,7 +24,7 @@ namespace StoreCore
                 else if (commandsMap.ContainsKey(input))
                     commandsMap[input]();
                 else
-                    Console.WriteLine("Incorrect command.");
+                    Console.WriteLine("Incorrect command. Type 'help' for a list of commands. Type 'exit' to exit the program.");
             }
 
         }

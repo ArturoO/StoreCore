@@ -32,8 +32,18 @@ namespace StoreCore
 
         static void listUsers()
         {
-            UserDb.list();
-        }
+            List<User> users = UserDb.list();
 
+            Console.WriteLine("---------------------------------------------------------------");
+            Console.WriteLine(" Id    | First name    | Last name     | Gender    | Age       ");
+            Console.WriteLine("---------------------------------------------------------------");
+
+            foreach (var user in users)
+            {
+                Console.WriteLine(String.Format(" {0,-6}| {1,-14}| {2,-14}| {3,-10}| {4,-10}",
+                  user.Id, user.FirstName, user.LastName, user.Gender, user.Age));
+                Console.WriteLine("---------------------------------------------------------------");
+            }
+        }
     }
 }
