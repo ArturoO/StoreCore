@@ -4,15 +4,15 @@ using System.Text;
 
 namespace StoreCore
 {
-    class UserUI
+    class UserUI: IConsoleUI
     {
-        public static void registerCommands(Dictionary<string, Action> commandsMap)
+        public void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-user", addUser);
             commandsMap.Add("list-users", listUsers);
         }
 
-        public static void addUser()
+        public void addUser()
         {
             Console.WriteLine("Please provide user first name.");
             String userFirstName = Console.ReadLine();
@@ -30,7 +30,7 @@ namespace StoreCore
                 Console.WriteLine("User not added.");
         }
 
-        static void listUsers()
+        public void listUsers()
         {
             List<User> users = UserDb.list();
 

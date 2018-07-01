@@ -48,9 +48,6 @@ namespace StoreCore
                         int age = int.Parse(reader[4].ToString());
 
                         users.Add(new User(id, first_name, last_name, gender, age));
-                        //Console.WriteLine(String.Format(" {0,-6}| {1,-14}| {2,-14}| {3,-10}| {3,-10}",
-                        //    reader[0], reader[1], reader[2], reader[3], reader[4]));
-                        //Console.WriteLine("---------------------------------------------------------------");
                     }
                 }
             }

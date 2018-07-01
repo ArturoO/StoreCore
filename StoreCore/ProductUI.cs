@@ -4,9 +4,9 @@ using System.Text;
 
 namespace StoreCore
 {
-    class ProductUI
+    class ProductUI: IConsoleUI
     { 
-        public static void registerCommands(Dictionary<string, Action> commandsMap)
+        public void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-product", addProduct);
             commandsMap.Add("list-products", listProducts);
@@ -15,7 +15,7 @@ namespace StoreCore
             commandsMap.Add("edit-product", editProduct);
         }
 
-        static void listProducts()
+        public void listProducts()
         {
             List<Product> products = ProductDb.list();
 
@@ -30,7 +30,7 @@ namespace StoreCore
             }
         }
 
-        static void showProduct()
+        public void showProduct()
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
@@ -43,7 +43,7 @@ namespace StoreCore
             Console.WriteLine($"Description:\r\n{product.Description}");
         }
 
-        static void deleteProduct()
+        public void deleteProduct()
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
@@ -54,7 +54,7 @@ namespace StoreCore
                 Console.WriteLine("Product not deleted.");
         }
 
-        static void addProduct()
+        public void addProduct()
         {
             Console.WriteLine("Please provide product name.");
             String productName = Console.ReadLine();
@@ -73,7 +73,7 @@ namespace StoreCore
 
         }
 
-        static void editProduct()
+        public void editProduct()
         {
             Console.WriteLine("Please provide product Id.");
             int productId = int.Parse(Console.ReadLine());
