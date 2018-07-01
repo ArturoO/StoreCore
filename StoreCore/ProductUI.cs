@@ -6,7 +6,7 @@ namespace StoreCore
 {
     class ProductUI
     { 
-        public static void registerCommands(ref Dictionary<string, Action> commandsMap)
+        public static void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-product", addProduct);
             commandsMap.Add("list-products", listProducts);

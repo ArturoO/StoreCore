@@ -36,8 +36,8 @@ namespace StoreCore
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
             commandsMap = new Dictionary<string, Action>();
-            ProductUI.registerCommands(ref commandsMap);
-            UserUI.registerCommands(ref commandsMap);
+            ProductUI.registerCommands(commandsMap);
+            UserUI.registerCommands(commandsMap);
 
             commandsMap.Add("help", listCommands);
         }

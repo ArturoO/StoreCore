@@ -6,7 +6,7 @@ namespace StoreCore
 {
     class UserUI
     {
-        public static void registerCommands(ref Dictionary<string, Action> commandsMap)
+        public static void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-user", addUser);
             commandsMap.Add("list-users", listUsers);
