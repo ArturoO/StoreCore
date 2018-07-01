@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace StoreCore
 {
-    class Product
+    class ProductDb
     {
 
 

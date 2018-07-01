@@ -17,21 +17,21 @@ namespace StoreCore
 
         static void listProducts()
         {
-            Product.list();
+            ProductDb.list();
         }
 
         static void showProduct()
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            Product.show(productId);
+            ProductDb.show(productId);
         }
 
         static void deleteProduct()
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            bool result = Product.delete(productId);
+            bool result = ProductDb.delete(productId);
             if (result)
                 Console.WriteLine("Product deleted.");
             else
@@ -49,7 +49,7 @@ namespace StoreCore
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
-            bool result = Product.add(productName, productDescription, productPrice, productCategory);
+            bool result = ProductDb.add(productName, productDescription, productPrice, productCategory);
             if (result)
                 Console.WriteLine("Product added.");
             else
@@ -70,7 +70,7 @@ namespace StoreCore
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
-            bool result = Product.edit(productId, productName, productDescription, productPrice, productCategory);
+            bool result = ProductDb.edit(productId, productName, productDescription, productPrice, productCategory);
             if (result)
                 Console.WriteLine("Product changed.");
             else

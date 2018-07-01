@@ -5,7 +5,7 @@ using System.Text;
 
 namespace StoreCore
 {
-    class User
+    class UserDb
     {
 
         public static bool add(string firstName, string lastName, string gender, int age)
