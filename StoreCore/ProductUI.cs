@@ -17,7 +17,7 @@ namespace StoreCore
 
         public void ListProducts()
         {
-            List<Product> products = ProductDb.List();
+            List<Product> products = ProductDM.List();
 
             Console.WriteLine("-------------------------------------------");
             Console.WriteLine(" Id    | Name      | Price     | Category  ");
@@ -35,7 +35,7 @@ namespace StoreCore
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
 
-            Product product = ProductDb.FindById(productId);            
+            Product product = ProductDM.FindById(productId);            
 
             Console.WriteLine($"Id: {product.Id}");
             Console.WriteLine($"Name: {product.Name}");
@@ -48,7 +48,7 @@ namespace StoreCore
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            bool result = ProductDb.Delete(productId);
+            bool result = ProductDM.Delete(productId);
             if (result)
                 Console.WriteLine("Product deleted.");
             else
@@ -67,7 +67,7 @@ namespace StoreCore
             String productCategory = Console.ReadLine();
 
             Product product = new Product(productName, productDescription, productPrice, productCategory);
-            bool result = ProductDb.Create(product);
+            bool result = ProductDM.Create(product);
 
             if (result)
                 Console.WriteLine($"Product added, Id: {product.Id} .");
@@ -90,11 +90,8 @@ namespace StoreCore
             String productCategory = Console.ReadLine();
 
             Product product = new Product(productId, productName, productDescription, productPrice, productCategory);
-            var result = ProductDb.Update(product);
+            var result = ProductDM.Update(product);
 
-            //var result = product.Update(product);
-            //var result = product.Update();
-            
             if (result)
                 Console.WriteLine("Product changed.");
             else

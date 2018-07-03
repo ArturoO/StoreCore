@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace StoreCore
 {
-    class ProductDb
+    class ProductDM
     {
 
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
