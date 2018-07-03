@@ -15,17 +15,19 @@ namespace StoreCore
         public void addUser()
         {
             Console.WriteLine("Please provide user first name.");
-            String userFirstName = Console.ReadLine();
+            String firstName = Console.ReadLine();
             Console.WriteLine("Please provide user last name.");
-            String userLastName = Console.ReadLine();
+            String lastName = Console.ReadLine();
             Console.WriteLine("Please provide user gender.");
-            String userGender = Console.ReadLine();
+            String gender = Console.ReadLine();
             Console.WriteLine("Please provide user age.");
-            int userAge = int.Parse(Console.ReadLine());
+            int age = int.Parse(Console.ReadLine());
 
-            bool result = UserDb.add(userFirstName, userLastName, userGender, userAge);
+            User newUser = new User(firstName, lastName, gender, age);
+            bool result = newUser.Create();
+
             if (result)
-                Console.WriteLine("User added.");
+                Console.WriteLine($"User added, ID: {newUser.Id}.");
             else
                 Console.WriteLine("User not added.");
         }

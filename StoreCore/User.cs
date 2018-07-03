@@ -12,6 +12,19 @@ namespace StoreCore
         protected string gender;
         protected int age;
 
+        public bool Create()
+        {
+            var userId = UserDb.Create(this.firstName, this.lastName, this.gender, this.age);
+
+            if (userId > 0)
+            {
+                this.id = userId;
+                return true;
+            }
+            else
+                return false;
+        }
+
         public User()
         {
             this.id = 0;
@@ -19,6 +32,14 @@ namespace StoreCore
             this.lastName = "";
             this.gender = "";
             this.age = 0;
+        }
+
+        public User(string firstName, string lastName, string gender, int age)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.gender = gender;
+            this.age = age;
         }
 
         public User(int id, string firstName, string lastName, string gender, int age)
@@ -95,6 +116,8 @@ namespace StoreCore
                 }
             }
         }
+
+       
 
     }
 }
