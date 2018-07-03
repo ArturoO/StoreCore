@@ -21,13 +21,21 @@ namespace StoreCore
             this.category = "";
         }
 
+        public Product(string name, string description, decimal price, string category)
+        {
+            Name = name;
+            Description = description;
+            Price = price;
+            Category = category;
+        }
+
         public Product(int id, string name, string description, decimal price, string category)
         {
-            this.id = id;
-            this.name = name;
-            this.description = description;
-            this.price = price;
-            this.category = category;
+            Id = id;
+            Name = name;
+            Description = description;
+            Price = price;
+            Category = category;
         }
 
         public int Id
@@ -93,6 +101,54 @@ namespace StoreCore
                 this.category = value;             
             }
         }
+
+        //public bool Create()
+        //{
+        //    var result = ProductDb.Create(Name, Description, Price, Category);
+
+        //    if (result > 0)
+        //    {
+        //        this.id = result;
+        //        return true;
+        //    }
+        //    else
+        //        return false;
+        //}
+
+        //public bool Update()
+        //{
+        //    var result = ProductDb.Update(Id, Name, Description, Price, Category);
+
+        //    if (result > 0)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //        return false;
+        //}
+
+        //public bool Update(Product product)
+        //{
+        //    var result = ProductDb.Update(Id, Name, Description, Price, Category);
+
+        //    if (result > 0)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //        return false;
+        //}
+
+        //public static Product FindById(int id)
+        //{
+        //    return ProductDb.FindById(id);
+        //}
+
+        //public static bool Delete(int id)
+        //{
+        //    return ProductDb.Delete(id);
+        //}
+
 
     }
 }

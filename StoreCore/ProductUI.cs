@@ -9,15 +9,15 @@ namespace StoreCore
         public void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-product", addProduct);
-            commandsMap.Add("list-products", listProducts);
+            commandsMap.Add("list-products", ListProducts);
             commandsMap.Add("show-product", showProduct);
             commandsMap.Add("delete-product", deleteProduct);
             commandsMap.Add("edit-product", editProduct);
         }
 
-        public void listProducts()
+        public void ListProducts()
         {
-            List<Product> products = ProductDb.list();
+            List<Product> products = ProductDb.List();
 
             Console.WriteLine("-------------------------------------------");
             Console.WriteLine(" Id    | Name      | Price     | Category  ");
@@ -34,7 +34,8 @@ namespace StoreCore
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            Product product = ProductDb.show(productId);
+
+            Product product = ProductDb.FindById(productId);            
 
             Console.WriteLine($"Id: {product.Id}");
             Console.WriteLine($"Name: {product.Name}");
@@ -47,7 +48,7 @@ namespace StoreCore
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            bool result = ProductDb.delete(productId);
+            bool result = ProductDb.Delete(productId);
             if (result)
                 Console.WriteLine("Product deleted.");
             else
@@ -65,9 +66,11 @@ namespace StoreCore
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
-            bool result = ProductDb.add(productName, productDescription, productPrice, productCategory);
+            Product product = new Product(productName, productDescription, productPrice, productCategory);
+            bool result = ProductDb.Create(product);
+
             if (result)
-                Console.WriteLine("Product added.");
+                Console.WriteLine($"Product added, Id: {product.Id} .");
             else
                 Console.WriteLine("Product not added.");
 
@@ -86,7 +89,12 @@ namespace StoreCore
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
-            bool result = ProductDb.edit(productId, productName, productDescription, productPrice, productCategory);
+            Product product = new Product(productId, productName, productDescription, productPrice, productCategory);
+            var result = ProductDb.Update(product);
+
+            //var result = product.Update(product);
+            //var result = product.Update();
+            
             if (result)
                 Console.WriteLine("Product changed.");
             else
