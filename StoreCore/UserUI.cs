@@ -23,11 +23,11 @@ namespace StoreCore
             Console.WriteLine("Please provide user age.");
             int age = int.Parse(Console.ReadLine());
 
-            User newUser = new User(firstName, lastName, gender, age);
-            bool result = newUser.Create();
+            User user = new User(firstName, lastName, gender, age);
+            bool result = UserDb.Create(user);
 
             if (result)
-                Console.WriteLine($"User added, ID: {newUser.Id}.");
+                Console.WriteLine($"User added, ID: {user.Id}.");
             else
                 Console.WriteLine("User not added.");
         }

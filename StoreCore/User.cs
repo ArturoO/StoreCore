@@ -104,18 +104,6 @@ namespace StoreCore
             }
         }
 
-        public bool Create()
-        {
-            var result = UserDb.Create(this.firstName, this.lastName, this.gender, this.age);
-
-            if (result > 0)
-            {
-                this.id = result;
-                return true;
-            }
-            else
-                return false;
-        }
 
     }
 }
