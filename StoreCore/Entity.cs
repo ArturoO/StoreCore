@@ -24,9 +24,4 @@ namespace StoreCore
         }
 
     }
-
-    interface IEntity
-    {
-
-    }
 }
