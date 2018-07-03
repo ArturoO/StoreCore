@@ -6,6 +6,14 @@ namespace StoreCore
 {
     class UserUI: IConsoleUI
     {
+
+        protected UserDM userDM;
+
+        public UserUI()
+        {
+            userDM = new UserDM();
+        }
+
         public void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-user", addUser);
@@ -24,7 +32,7 @@ namespace StoreCore
             int age = int.Parse(Console.ReadLine());
 
             User user = new User(firstName, lastName, gender, age);
-            bool result = UserDM.Create(user);
+            bool result = userDM.Create(user);
 
             if (result)
                 Console.WriteLine($"User added, ID: {user.Id}.");
@@ -34,7 +42,7 @@ namespace StoreCore
 
         public void listUsers()
         {
-            List<User> users = UserDM.list();
+            List<User> users = userDM.list();
 
             Console.WriteLine("---------------------------------------------------------------");
             Console.WriteLine(" Id    | First name    | Last name     | Gender    | Age       ");

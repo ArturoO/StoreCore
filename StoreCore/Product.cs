@@ -4,9 +4,8 @@ using System.Text;
 
 namespace StoreCore
 {
-    class Product
+    class Product : Entity
     {
-        protected int id;
         protected string name;
         protected string description;
         protected decimal price;
@@ -38,20 +37,7 @@ namespace StoreCore
             Category = category;
         }
 
-        public int Id
-        {
-            get
-            {
-                return this.id;
-            }
-            set
-            {
-                if (value > 0)
-                {
-                    this.id = value;
-                }
-            }
-        }
+        
 
         public string Name
         {

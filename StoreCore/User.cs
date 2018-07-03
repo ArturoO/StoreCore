@@ -4,9 +4,8 @@ using System.Text;
 
 namespace StoreCore
 {
-    class User
+    class User : Entity
     {
-        protected int id;
         protected string firstName;
         protected string lastName;
         protected string gender;
@@ -36,21 +35,6 @@ namespace StoreCore
             this.lastName = lastName;
             this.gender = gender;
             this.age = age;
-        }
-
-        public int Id
-        {
-            get
-            {
-                return this.id;
-            }
-            set
-            {
-                if (value > 0)
-                {
-                    this.id = value;
-                }
-            }
         }
 
         public string FirstName

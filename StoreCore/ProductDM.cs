@@ -5,12 +5,12 @@ using System.Data.SqlClient;
 
 namespace StoreCore
 {
-    class ProductDM
+    class ProductDM 
     {
 
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
 
-        public static bool Create(Product product)
+        public bool Create(Product product)
         {
             using (var client = new SqlConnection(connectionString))
             {
@@ -35,7 +35,7 @@ namespace StoreCore
             }
         }
 
-        public static bool Update(Product product)
+        public bool Update(Product product)
         {
             using (var client = new SqlConnection(connectionString))
             {
@@ -55,7 +55,7 @@ namespace StoreCore
             }
         }
 
-        public static List<Product> List()
+        public List<Product> List()
         {
             List<Product> products = new List<Product>();
             using (var client = new SqlConnection(connectionString))
@@ -82,7 +82,7 @@ namespace StoreCore
             return products;
         }
 
-        public static Product FindById(int Id)
+        public Product FindById(int Id)
         {
             Product product = new Product();
             using (var client = new SqlConnection(connectionString))
@@ -109,7 +109,7 @@ namespace StoreCore
             return product;
         }
 
-        public static bool Delete(int Id)
+        public bool Delete(int Id)
         {
             using (var client = new SqlConnection(connectionString))
             {

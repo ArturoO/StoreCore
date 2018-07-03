@@ -5,12 +5,12 @@ using System.Text;
 
 namespace StoreCore
 {
-    class UserDM
+    class UserDM 
     {
 
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
 
-        public static bool Create(User user)
+        public bool Create(User user)
         {
             using (var client = new SqlConnection(connectionString))
             {
@@ -35,7 +35,7 @@ namespace StoreCore
             }
         }
 
-        public static List<User> list()
+        public List<User> list()
         {
             List<User> users = new List<User>();
 
