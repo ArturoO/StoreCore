@@ -166,7 +166,7 @@ namespace StoreCore
             //convert bytes to string
             string passwordHash = Convert.ToBase64String(hashBytes);
 
-            Console.WriteLine($"Password hash is: {passwordHash}\r\nLenght of {passwordHash.Length}");
+            //Console.WriteLine($"Password hash is: {passwordHash}\r\nLenght of {passwordHash.Length}");
 
             Password = passwordHash;
         }
@@ -183,7 +183,7 @@ namespace StoreCore
 
             for(int i=0; i<20; i++)
             {
-                if(hashBytes[16+1]!=hash[i])
+                if(hashBytes[16+i]!=hash[i])
                 {
                     result = false;
                     break;

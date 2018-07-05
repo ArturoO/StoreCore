@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreCore.Factory;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -66,7 +67,10 @@ namespace StoreCore
             //bool result = UserDM.Register(user);
 
             if (result)
+            {
+                UserFactory.SetCurrentUser(user);
                 Console.WriteLine($"Password is valid.");
+            }
             else
                 Console.WriteLine("Password isn't valid.");
         }
