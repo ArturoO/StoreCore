@@ -35,32 +35,83 @@ namespace StoreCore
             }
         }
 
-        public static List<User> list()
+        public static bool Register(User user)
         {
-            List<User> users = new List<User>();
-
             using (var client = new SqlConnection(connectionString))
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendLine("SELECT Id, first_name, last_name, gender, age  FROM Users");
+                sbCmd.AppendFormat(
+                    "INSERT INTO Users(username, password)"
+                    + " OUTPUT INSERTED.Id VALUES ('{0}', '{1}') ",
+                    user.Username, user.Password);
+
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
+                if (insertedId > 0)
+                {
+                    user.Id = insertedId;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static User FindByUsername(string username)
+        {
+            User user = new User();
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendFormat(
+                    "SELECT *"
+                    + " FROM Users WHERE username='{0}'",
+                    username);
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        int id = int.Parse(reader["Id"].ToString());
-                        string first_name = reader["first_name"].ToString();
-                        string last_name = reader["last_name"].ToString();
-                        string gender = reader["gender"].ToString();
-                        int age = int.Parse(reader["age"].ToString());
-                        User user = new User(id, first_name, last_name, gender, age);
-                        users.Add(user);
+                        string password = reader["password"].ToString();
+                        user.Username = username;
+                        user.Password = password;
+                        //user = new User(username, password);
                     }
                 }
             }
-            return users;
+            return user;
         }
+
+        //public static List<User> list()
+        //{
+        //    List<User> users = new List<User>();
+
+        //    using (var client = new SqlConnection(connectionString))
+        //    {
+        //        client.Open();
+        //        StringBuilder sbCmd = new StringBuilder();
+        //        sbCmd.AppendLine("SELECT Id, first_name, last_name, gender, age  FROM Users");
+        //        SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+        //        using (var reader = cmd.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                int id = int.Parse(reader["Id"].ToString());
+        //                string first_name = reader["first_name"].ToString();
+        //                string last_name = reader["last_name"].ToString();
+        //                string gender = reader["gender"].ToString();
+        //                int age = int.Parse(reader["age"].ToString());
+        //                User user = new User(id, first_name, last_name, gender, age);
+        //                users.Add(user);
+        //            }
+        //        }
+        //    }
+        //    return users;
+        //}
 
     }
 }
