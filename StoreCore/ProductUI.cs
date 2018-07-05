@@ -6,13 +6,7 @@ namespace StoreCore
 {
     class ProductUI: IConsoleUI
     {
-        protected ProductDM productDM;
-
-        public ProductUI()
-        {
-            productDM = new ProductDM();
-        }
-
+        
         public void registerCommands(Dictionary<string, Action> commandsMap)
         {
             commandsMap.Add("add-product", addProduct);
@@ -24,7 +18,7 @@ namespace StoreCore
 
         public void ListProducts()
         {
-            List<Product> products = this.productDM.List();
+            List<Product> products = ProductDM.List();
 
             Console.WriteLine("-------------------------------------------");
             Console.WriteLine(" Id    | Name      | Price     | Category  ");
@@ -42,7 +36,7 @@ namespace StoreCore
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
 
-            Product product = this.productDM.FindById(productId);            
+            Product product = ProductDM.FindById(productId);            
 
             Console.WriteLine($"Id: {product.Id}");
             Console.WriteLine($"Name: {product.Name}");
@@ -55,7 +49,7 @@ namespace StoreCore
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            bool result = this.productDM.Delete(productId);
+            bool result = ProductDM.Delete(productId);
             if (result)
                 Console.WriteLine("Product deleted.");
             else
@@ -74,7 +68,7 @@ namespace StoreCore
             String productCategory = Console.ReadLine();
 
             Product product = new Product(productName, productDescription, productPrice, productCategory);
-            bool result = this.productDM.Create(product);
+            bool result = ProductDM.Create(product);
 
             if (result)
                 Console.WriteLine($"Product added, Id: {product.Id} .");
@@ -97,7 +91,7 @@ namespace StoreCore
             String productCategory = Console.ReadLine();
 
             Product product = new Product(productId, productName, productDescription, productPrice, productCategory);
-            var result = this.productDM.Update(product);
+            var result = ProductDM.Update(product);
 
             if (result)
                 Console.WriteLine("Product changed.");

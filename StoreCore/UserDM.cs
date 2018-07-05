@@ -10,7 +10,7 @@ namespace StoreCore
 
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
 
-        public bool Create(User user)
+        public static bool Create(User user)
         {
             using (var client = new SqlConnection(connectionString))
             {
@@ -35,7 +35,7 @@ namespace StoreCore
             }
         }
 
-        public List<User> list()
+        public static List<User> list()
         {
             List<User> users = new List<User>();
 
