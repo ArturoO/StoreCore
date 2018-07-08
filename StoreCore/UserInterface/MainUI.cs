@@ -37,21 +37,15 @@ namespace StoreCore
                     break;
                 else if (commandsMap.ContainsKey(input))
                 {
-                    string userType = "";
-                    User currentUser = UserFactory.GetCurrentUser();
-                    if (currentUser == null)
-                        userType = "guest";
-                    else
-                        userType = currentUser.Type;
-                    
+                    string userType = UserFactory.GetCurrentUserType();
                     int result = Array.IndexOf(commandsMap[input].users, userType);
                     if(result>=0)
                         commandsMap[input].callable();
                     else
-                        Console.WriteLine("You're not allowed to use this command.");
+                        Console.WriteLine("Error: You're not allowed to use this command.");
                 }
                 else
-                    Console.WriteLine("Incorrect command. Type 'help' for a list of commands. Type 'exit' to exit the program.");
+                    Console.WriteLine("Error: Incorrect command. Type 'help' for a list of commands. Type 'exit' to exit the program.");
             }
         }
 
@@ -63,9 +57,16 @@ namespace StoreCore
 
 
         public void Help()
-        {
-            List<string> keys = new List<string>(this.commandsMap.Keys);
-            var commands = String.Join(", ", keys.ToArray());
+        {            
+            string userType = UserFactory.GetCurrentUserType();
+            List<string> commandsList = new List<string>();
+            foreach (var commandMap in this.commandsMap)
+            {
+                if (Array.IndexOf(commandMap.Value.users, userType) >= 0)
+                    commandsList.Add(commandMap.Key);
+            }
+
+            var commands = String.Join(", ", commandsList.ToArray());
             Console.WriteLine(commands);
         }
 

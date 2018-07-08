@@ -9,8 +9,9 @@ namespace StoreCore
     {
         public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
-            commandsMap.Add("register", new CommandInfo(new string[] { "guest", "client", "admin" }, Register));
-            commandsMap.Add("login", new CommandInfo(new string[] { "guest", "client", "admin" }, Login));
+            commandsMap.Add("register", new CommandInfo(new string[] { "guest" }, Register));
+            commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
+            commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
         }
 
         public void Register()
@@ -54,10 +55,16 @@ namespace StoreCore
             if (result)
             {
                 UserFactory.SetCurrentUser(user);
-                Console.WriteLine($"Password is valid.");
+                Console.WriteLine("Logged in.");
             }
             else
-                Console.WriteLine("Password isn't valid.");
+                Console.WriteLine("Error: credentials incorrect.");
+        }
+
+        public void Logout()
+        {
+            UserFactory.SetCurrentUser(null);
+            Console.WriteLine("You were logged out.");
         }
 
         //public void addUser()

@@ -76,10 +76,14 @@ namespace StoreCore
                 {
                     while (reader.Read())
                     {
-                        string password = reader["password"].ToString();
                         user.Username = username;
-                        user.Password = password;
-                        //user = new User(username, password);
+                        user.Password = reader["password"].ToString();
+                        user.FirstName = reader["first_name"].ToString();
+                        user.LastName = reader["last_name"].ToString();
+                        user.Gender = reader["gender"].ToString();
+                        user.Age = int.Parse(reader["age"].ToString());
+                        user.Type = reader["type"].ToString();
+                        user.Email = reader["email"].ToString();                        
                     }
                 }
             }
