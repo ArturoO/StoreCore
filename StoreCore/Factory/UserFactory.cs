@@ -6,7 +6,7 @@ namespace StoreCore.Factory
 {
     class UserFactory
     {
-        protected static User user;
+        protected static User user = null;
 
         public static void SetCurrentUser(User user)
         {

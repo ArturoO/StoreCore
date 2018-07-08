@@ -14,7 +14,7 @@ namespace StoreCore
         protected string lastName;
         protected string gender;
         protected int age;
-        
+        protected string email;
 
         public User()
         {
@@ -39,24 +39,25 @@ namespace StoreCore
             Type = type;
         }
 
-        public User(string firstName, string lastName, string gender, int age, string username, string password, string type)
+        public User(string firstName, string lastName, string gender, int age, string username, string type, string email)
         {
             FirstName = firstName;
             LastName = lastName;
             Gender = gender;
             Age = age;
             Username = username;
-            Password = password;
             Type = type;
+            Email = email;
         }
 
-        public User(int id, string firstName, string lastName, string gender, int age, string username, string password, string type)
+        public User(int id, string firstName, string lastName, string gender, int age, string username, string password, string type, string email)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
             Gender = gender;
             Age = age;
+            Email = email;
         }
 
         public string FirstName
@@ -134,6 +135,18 @@ namespace StoreCore
             }
         }
 
+        public string Email
+        {
+            get
+            {
+                return this.email;
+            }
+            set
+            {
+                this.email = value;
+            }
+        }
+
         public string Type
         {
             get
@@ -165,8 +178,6 @@ namespace StoreCore
 
             //convert bytes to string
             string passwordHash = Convert.ToBase64String(hashBytes);
-
-            //Console.WriteLine($"Password hash is: {passwordHash}\r\nLenght of {passwordHash.Length}");
 
             Password = passwordHash;
         }

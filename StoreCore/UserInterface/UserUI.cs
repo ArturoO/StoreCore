@@ -17,21 +17,22 @@ namespace StoreCore
 
         public void Register()
         {
+            Console.WriteLine("Please provide user first name.");
+            String firstName = Console.ReadLine();
+            Console.WriteLine("Please provide user last name.");
+            String lastName = Console.ReadLine();
+            Console.WriteLine("Please provide email.");
+            String email = Console.ReadLine();
             Console.WriteLine("Please provide username.");
-            String username = Console.ReadLine();
+            String username = Console.ReadLine();            
             Console.WriteLine("Please provide password.");
             String password = Console.ReadLine();
-            //Console.WriteLine("Please provide user first name.");
-            //String firstName = Console.ReadLine();
-            //Console.WriteLine("Please provide user last name.");
-            //String lastName = Console.ReadLine();
-            //Console.WriteLine("Please provide user gender.");
-            //String gender = Console.ReadLine();
-            //Console.WriteLine("Please provide user age.");
-            //int age = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please provide user gender.");
+            String gender = Console.ReadLine();
+            Console.WriteLine("Please provide user age.");
+            int age = int.Parse(Console.ReadLine());
 
-            User user = new User();
-            user.Username = username;
+            User user = new User(firstName, lastName, gender, age, username, "client", email);            
             user.HashPassword(password);
 
             bool result = UserDM.Register(user);
@@ -48,23 +49,9 @@ namespace StoreCore
             String username = Console.ReadLine();
             Console.WriteLine("Please provide password.");
             String password = Console.ReadLine();
-            //Console.WriteLine("Please provide user first name.");
-            //String firstName = Console.ReadLine();
-            //Console.WriteLine("Please provide user last name.");
-            //String lastName = Console.ReadLine();
-            //Console.WriteLine("Please provide user gender.");
-            //String gender = Console.ReadLine();
-            //Console.WriteLine("Please provide user age.");
-            //int age = int.Parse(Console.ReadLine());
-
+            
             User user = UserDM.FindByUsername(username);
             var result = user.ValidatePassword(password);
-
-            //User user = new User();
-            //user.Username = username;
-            //user.HashPassword(password);
-
-            //bool result = UserDM.Register(user);
 
             if (result)
             {

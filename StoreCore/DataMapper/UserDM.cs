@@ -42,9 +42,9 @@ namespace StoreCore
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
                 sbCmd.AppendFormat(
-                    "INSERT INTO Users(username, password)"
-                    + " OUTPUT INSERTED.Id VALUES ('{0}', '{1}') ",
-                    user.Username, user.Password);
+                    "INSERT INTO Users(first_name, last_name, gender, age, username, password, type, email)"
+                    + " OUTPUT INSERTED.Id VALUES ('{0}', '{1}', '{2}', {3}, '{4}', '{5}', '{6}', '{7}') ",
+                    user.FirstName, user.LastName, user.Gender, user.Age, user.Username, user.Password, user.Type, user.Email);
 
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
                 var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
