@@ -90,32 +90,37 @@ namespace StoreCore
             return user;
         }
 
-        //public static List<User> list()
-        //{
-        //    List<User> users = new List<User>();
+        public static List<User> list()
+        {
+            List<User> users = new List<User>();
 
-        //    using (var client = new SqlConnection(connectionString))
-        //    {
-        //        client.Open();
-        //        StringBuilder sbCmd = new StringBuilder();
-        //        sbCmd.AppendLine("SELECT Id, first_name, last_name, gender, age  FROM Users");
-        //        SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
-        //        using (var reader = cmd.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                int id = int.Parse(reader["Id"].ToString());
-        //                string first_name = reader["first_name"].ToString();
-        //                string last_name = reader["last_name"].ToString();
-        //                string gender = reader["gender"].ToString();
-        //                int age = int.Parse(reader["age"].ToString());
-        //                User user = new User(id, first_name, last_name, gender, age);
-        //                users.Add(user);
-        //            }
-        //        }
-        //    }
-        //    return users;
-        //}
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendLine("SELECT * FROM Users");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = int.Parse(reader["Id"].ToString());
+                        string firstName = reader["first_name"].ToString();
+                        string lastName = reader["last_name"].ToString();
+                        string username = reader["username"].ToString();
+                        string password = reader["password"].ToString();
+                        string email = reader["email"].ToString();
+                        string gender = reader["gender"].ToString();
+                        string type = reader["type"].ToString();
+                        int age = int.Parse(reader["age"].ToString());
+
+                        User user = new User(id, firstName, lastName, gender, age, username, password, type, email);
+                        users.Add(user);
+                    }
+                }
+            }
+            return users;
+        }
 
     }
 }

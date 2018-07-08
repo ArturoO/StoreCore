@@ -31,16 +31,13 @@ namespace StoreCore
 
             while (true)
             {
-                String input = Console.ReadLine();
-
-                if (input == "exit")
+                String command = Console.ReadLine();
+                if (command == "exit")
                     break;
-                else if (commandsMap.ContainsKey(input))
-                {
-                    string userType = UserFactory.GetCurrentUserType();
-                    int result = Array.IndexOf(commandsMap[input].users, userType);
-                    if(result>=0)
-                        commandsMap[input].callable();
+                else if (commandsMap.ContainsKey(command))
+                {   
+                    if(CurrentUserCan(commandsMap[command]))
+                        commandsMap[command].callable();
                     else
                         Console.WriteLine("Error: You're not allowed to use this command.");
                 }
@@ -49,6 +46,15 @@ namespace StoreCore
             }
         }
 
+        public bool CurrentUserCan(CommandInfo commandInfo)
+        {
+            string userType = UserFactory.GetCurrentUserType();
+            int result = Array.IndexOf(commandInfo.users, userType);
+            if (result >= 0)
+                return true;
+            else
+                return false;
+        }
 
         public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {

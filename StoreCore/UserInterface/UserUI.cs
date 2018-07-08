@@ -12,6 +12,7 @@ namespace StoreCore
             commandsMap.Add("register", new CommandInfo(new string[] { "guest" }, Register));
             commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
+            commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));
         }
 
         public void Register()
@@ -87,20 +88,21 @@ namespace StoreCore
         //        Console.WriteLine("User not added.");
         //}
 
-        //public void listUsers()
-        //{
-        //    List<User> users = UserDM.list();
+        public void ListUsers()
+        {
+            List<User> users = UserDM.list();
 
-        //    Console.WriteLine("---------------------------------------------------------------");
-        //    Console.WriteLine(" Id    | First name    | Last name     | Gender    | Age       ");
-        //    Console.WriteLine("---------------------------------------------------------------");
+            //email, type, username
+            Console.WriteLine("------------------------------------------------------------------------------------------------------");
+            Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
+            Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
-        //    foreach (var user in users)
-        //    {
-        //        Console.WriteLine(String.Format(" {0,-6}| {1,-14}| {2,-14}| {3,-10}| {4,-10}",
-        //          user.Id, user.FirstName, user.LastName, user.Gender, user.Age));
-        //        Console.WriteLine("---------------------------------------------------------------");
-        //    }
-        //}
+            foreach (var user in users)
+            {
+                Console.WriteLine(String.Format(" {0,-5}| {1,-11}| {2,-11}| {3,-11}| {4,-25}| {5,-11}| {6,-4}| {7,-9}",
+                  user.Id, user.Username, user.FirstName, user.LastName, user.Email, user.Gender, user.Age, user.Type));
+                Console.WriteLine("------------------------------------------------------------------------------------------------------");
+            }
+        }
     }
 }
