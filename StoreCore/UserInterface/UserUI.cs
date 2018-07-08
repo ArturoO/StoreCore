@@ -7,12 +7,10 @@ namespace StoreCore
 {
     class UserUI: IConsoleUI
     {
-        public void registerCommands(Dictionary<string, Action> commandsMap)
+        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
-            commandsMap.Add("register", Register);
-            commandsMap.Add("login", Login);
-            //commandsMap.Add("add-user", addUser);
-            //commandsMap.Add("list-users", listUsers);
+            commandsMap.Add("register", new CommandInfo(new string[] { "guest", "client", "admin" }, Register));
+            commandsMap.Add("login", new CommandInfo(new string[] { "guest", "client", "admin" }, Login));
         }
 
         public void Register()

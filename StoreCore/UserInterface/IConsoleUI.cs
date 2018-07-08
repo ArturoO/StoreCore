@@ -6,6 +6,20 @@ namespace StoreCore
 {
     interface IConsoleUI
     {
-        void registerCommands(Dictionary<string, Action> commandsMap);
+        void registerCommands(Dictionary<string, CommandInfo> commandsMap);
     }
+
+    struct CommandInfo
+    {
+        public string[] users;
+        public Action callable;
+
+        public CommandInfo(string[] users, Action callable)
+        {
+
+            this.users = users;
+            this.callable = callable;
+        }
+    }
+
 }

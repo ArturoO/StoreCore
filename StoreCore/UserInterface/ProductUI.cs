@@ -7,13 +7,13 @@ namespace StoreCore
     class ProductUI: IConsoleUI
     {
         
-        public void registerCommands(Dictionary<string, Action> commandsMap)
+        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
-            commandsMap.Add("add-product", addProduct);
-            commandsMap.Add("list-products", ListProducts);
-            commandsMap.Add("show-product", showProduct);
-            commandsMap.Add("delete-product", deleteProduct);
-            commandsMap.Add("edit-product", editProduct);
+            commandsMap.Add("add-product", new CommandInfo(new string[] { "admin" }, addProduct));
+            commandsMap.Add("list-products", new CommandInfo(new string[] { "guest", "client", "admin" }, ListProducts));
+            commandsMap.Add("show-product", new CommandInfo(new string[] { "guest", "client", "admin" }, showProduct));
+            commandsMap.Add("delete-product", new CommandInfo(new string[] { "admin" }, deleteProduct));
+            commandsMap.Add("edit-product", new CommandInfo(new string[] { "admin" }, editProduct));
         }
 
         public void ListProducts()
