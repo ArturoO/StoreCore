@@ -13,6 +13,14 @@ namespace StoreCore.Factory
             UserFactory.currentUser = user;
         }
 
+        public static void SetCurrentUserAsGuest()
+        {
+            User guest = new User();
+            guest.Username = "guest";
+            guest.Type = "guest";
+            UserFactory.currentUser = guest;
+        }
+
         public static User GetCurrentUser()
         {
             return UserFactory.currentUser;
@@ -20,10 +28,7 @@ namespace StoreCore.Factory
 
         public static string GetCurrentUserType()
         {
-            if (currentUser == null)
-                return "guest";
-            else
-                return currentUser.Type;
+            return currentUser.Type;
         }
     }
 }

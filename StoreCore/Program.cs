@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using StoreCore.Factory;
 
 namespace StoreCore
 {
@@ -19,9 +20,14 @@ namespace StoreCore
 
         static void Config()
         {
+            //Create customCulture to use dot as decimal separator
             System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+
+            //Set guest as a current user
+            UserFactory.SetCurrentUserAsGuest();
+
         }
     }
 }

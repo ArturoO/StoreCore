@@ -64,7 +64,8 @@ namespace StoreCore
 
         public void Logout()
         {
-            UserFactory.SetCurrentUser(null);
+            UserFactory.SetCurrentUserAsGuest();
+            //UserFactory.SetCurrentUser(null);
             Console.WriteLine("You were logged out.");
         }
 
