@@ -20,10 +20,10 @@ namespace StoreCore
                     "INSERT INTO Products(name, description, price, category) OUTPUT INSERTED.Id"
                     + " VALUES (@name, @description, @price, @category) ");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
-                cmd.Parameters.AddWithValue("name", product.Name);
-                cmd.Parameters.AddWithValue("description", product.Description);
-                cmd.Parameters.AddWithValue("price", product.Price);
-                cmd.Parameters.AddWithValue("category", product.Category);
+                cmd.Parameters.AddWithValue("@name", product.Name);
+                cmd.Parameters.AddWithValue("@description", product.Description);
+                cmd.Parameters.AddWithValue("@price", product.Price);
+                cmd.Parameters.AddWithValue("@category", product.Category);
 
                 var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
                 if (insertedId > 0)
