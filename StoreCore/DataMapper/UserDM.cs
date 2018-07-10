@@ -16,12 +16,16 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendFormat(
+                sbCmd.Append(
                     "INSERT INTO Users(first_name, last_name, gender, age)"
-                    + " OUTPUT INSERTED.Id VALUES ('{0}', '{1}', '{2}', {3}) ", 
-                    user.FirstName, user.LastName, user.Gender, user.Age);
+                    + " OUTPUT INSERTED.Id VALUES (@first_name, @last_name, @gender, @age) ");
 
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@first_name", user.FirstName);
+                cmd.Parameters.AddWithValue("@last_name", user.LastName);
+                cmd.Parameters.AddWithValue("@gender", user.Gender);
+                cmd.Parameters.AddWithValue("@age", user.Age);
+
                 var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
                 if(insertedId>0)
                 {
@@ -41,12 +45,20 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendFormat(
+                sbCmd.Append(
                     "INSERT INTO Users(first_name, last_name, gender, age, username, password, type, email)"
-                    + " OUTPUT INSERTED.Id VALUES ('{0}', '{1}', '{2}', {3}, '{4}', '{5}', '{6}', '{7}') ",
-                    user.FirstName, user.LastName, user.Gender, user.Age, user.Username, user.Password, user.Type, user.Email);
+                    + " OUTPUT INSERTED.Id VALUES (@first_name, @last_name, @gender, @age, @username, @password, @type, @email)");
 
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@first_name", user.FirstName);
+                cmd.Parameters.AddWithValue("@last_name", user.LastName);
+                cmd.Parameters.AddWithValue("@gender", user.Gender);
+                cmd.Parameters.AddWithValue("@age", user.Age);
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                cmd.Parameters.AddWithValue("@password", user.Password);
+                cmd.Parameters.AddWithValue("@type", user.Type);
+                cmd.Parameters.AddWithValue("@email", user.Email);
+
                 var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
                 if (insertedId > 0)
                 {
@@ -67,11 +79,12 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendFormat(
+                sbCmd.Append(
                     "SELECT *"
-                    + " FROM Users WHERE username='{0}'",
-                    username);
+                    + " FROM Users WHERE username=@username");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@username", username);
+
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())

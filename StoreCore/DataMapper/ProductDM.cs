@@ -16,12 +16,15 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendFormat(
+                sbCmd.Append(
                     "INSERT INTO Products(name, description, price, category) OUTPUT INSERTED.Id"
-                    + " VALUES ('{0}', '{1}', {2}, '{3}') ", 
-                    product.Name, product.Description, product.Price, product.Category);
-
+                    + " VALUES (@name, @description, @price, @category) ");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("name", product.Name);
+                cmd.Parameters.AddWithValue("description", product.Description);
+                cmd.Parameters.AddWithValue("price", product.Price);
+                cmd.Parameters.AddWithValue("category", product.Category);
+
                 var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
                 if (insertedId > 0)
                 {
@@ -43,10 +46,16 @@ namespace StoreCore
                 StringBuilder sbCmd = new StringBuilder();
                 sbCmd.AppendFormat(
                     "UPDATE Products"
-                    + " SET name='{0}', description='{1}', price={2}, category='{3}'"
-                    + " WHERE Id = {4} ", 
+                    + " SET name=@name, description=@description, price=@price, category=@category"
+                    + " WHERE Id = @Id", 
                     product.Name, product.Description, product.Price, product.Category, product.Id);
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@name", product.Name);
+                cmd.Parameters.AddWithValue("@description", product.Description);
+                cmd.Parameters.AddWithValue("@price", product.Price);
+                cmd.Parameters.AddWithValue("@category", product.Category);
+                cmd.Parameters.AddWithValue("@Id", product.Id);
+
                 var result = cmd.ExecuteNonQuery();
                 if (result > 0)
                     return true;
@@ -89,11 +98,12 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendFormat(
+                sbCmd.Append(
                     "SELECT Id, name, description, price, category"
-                    + " FROM Products WHERE Id={0}", 
-                    Id);
+                    + " FROM Products WHERE Id=@Id");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@Id", Id);
+
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -115,8 +125,9 @@ namespace StoreCore
             {
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
-                sbCmd.AppendFormat("DELETE FROM Products WHERE Id = {0}", Id);
+                sbCmd.Append("DELETE FROM Products WHERE Id = $Id");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@Id", Id);
                 int result = cmd.ExecuteNonQuery();
                 if (result == 1)
                     return true;
