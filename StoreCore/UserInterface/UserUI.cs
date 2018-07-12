@@ -13,6 +13,7 @@ namespace StoreCore
             commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
             commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));
+            commandsMap.Add("add-to-cart", new CommandInfo(new string[] { "client", "admin" }, AddToCart));
         }
 
         public void Register()
@@ -105,5 +106,28 @@ namespace StoreCore
                 Console.WriteLine("------------------------------------------------------------------------------------------------------");
             }
         }
+
+        public void AddToCart()
+        {
+            Console.WriteLine("Please provide product Id.");
+            int productId = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please provide quantity.");
+            int qty = int.Parse(Console.ReadLine());
+
+            Product product = ProductDM.FindById(productId);
+            if (product.Id == 0)
+            { 
+                Console.WriteLine("Error: Product doesn't exists.");
+                return;
+            }
+
+            User user = UserFactory.GetCurrentUser();
+            bool result = user.AddToCart(product, qty);
+            if(result)
+                Console.WriteLine("Product added to cart.");
+            else
+                Console.WriteLine("Error: Couldn't add product to cart.");
+        }
+
     }
 }

@@ -6,18 +6,13 @@ namespace StoreCore
 {
     class Product : Entity
     {
-        protected string name;
-        protected string description;
-        protected decimal price;
-        protected string category;
+        protected string name = "";
+        protected string description = "";
+        protected decimal price = 0;
+        protected string category = "";
 
         public Product()
         {
-            this.id = 0;
-            this.name = "";
-            this.description = "";
-            this.price = 0;
-            this.category = "";
         }
 
         public Product(string name, string description, decimal price, string category)

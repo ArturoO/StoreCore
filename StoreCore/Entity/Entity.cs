@@ -6,7 +6,7 @@ namespace StoreCore
 {
     abstract class Entity
     {
-        protected int id;
+        protected int id = 0;
 
         public int Id
         {

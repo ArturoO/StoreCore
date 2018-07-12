@@ -2,30 +2,26 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using StoreCore.Factory;
+using StoreCore.DataMapper;
 
 namespace StoreCore
 {
     class User : Entity
     {
-        protected string username;
-        protected string password;
-        protected string type;
-        protected string firstName;
-        protected string lastName;
-        protected string gender;
-        protected int age;
-        protected string email;
+        protected string username = "";
+        protected string password = "";
+        protected string type = "";
+        protected string firstName = "";
+        protected string lastName = "";
+        protected string gender = "";
+        protected int age = 0;
+        protected string email = "";
+
+        protected Cart cart = null;
 
         public User()
         {
-            Id = 0;            
-            FirstName = "";
-            LastName = "";
-            Gender = "";
-            Age = 0;
-            Username = "";
-            Password = "";
-            Type = "";
         }
 
         public User(string username, string password)
@@ -159,6 +155,26 @@ namespace StoreCore
             }
         }
 
+        public Cart Cart
+        {
+            get
+            {
+                if (cart == null)
+                {
+                    cart = CartDM.FindByUser(this);
+                    if (cart.Id == 0)
+                        CartDM.Create(this);
+
+                }
+
+                return cart;
+            }
+            set
+            {
+                cart = value;
+            }
+        }
+
         public void HashPassword(string password)
         {
             //generate salt
@@ -203,6 +219,11 @@ namespace StoreCore
 
             return result;
             
+        }
+
+        public bool AddToCart(Product product, int qty)
+        {
+            return Cart.AddProduct(product, qty);
         }
 
     }

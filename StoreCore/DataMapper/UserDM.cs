@@ -72,6 +72,38 @@ namespace StoreCore
             }
         }
 
+        public static User FindById(int id)
+        {
+            User user = new User();
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append(
+                    "SELECT *"
+                    + " FROM Users WHERE Id=@Id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user.Id = int.Parse(reader["id"].ToString());
+                        user.Username = reader["username"].ToString();
+                        user.Password = reader["password"].ToString();
+                        user.FirstName = reader["first_name"].ToString();
+                        user.LastName = reader["last_name"].ToString();
+                        user.Gender = reader["gender"].ToString();
+                        user.Age = int.Parse(reader["age"].ToString());
+                        user.Type = reader["type"].ToString();
+                        user.Email = reader["email"].ToString();
+                    }
+                }
+            }
+            return user;
+        }
+
         public static User FindByUsername(string username)
         {
             User user = new User();
@@ -89,6 +121,7 @@ namespace StoreCore
                 {
                     while (reader.Read())
                     {
+                        user.Id = int.Parse(reader["Id"].ToString());
                         user.Username = username;
                         user.Password = reader["password"].ToString();
                         user.FirstName = reader["first_name"].ToString();
