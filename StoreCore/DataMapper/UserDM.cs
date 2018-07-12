@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using StoreCore.Entity;
 
-namespace StoreCore
+namespace StoreCore.DataMapper
 {
     class UserDM 
     {

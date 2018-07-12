@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
+using StoreCore.Entity;
 
-namespace StoreCore
+namespace StoreCore.DataMapper
 {
     class ProductDM 
     {

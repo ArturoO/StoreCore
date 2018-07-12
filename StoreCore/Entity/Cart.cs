@@ -4,9 +4,9 @@ using System.Text;
 using StoreCore.DataMapper;
 using StoreCore.Factory;
 
-namespace StoreCore
+namespace StoreCore.Entity
 {
-    class Cart: Entity
+    class Cart: AEntity
     {
         protected int user_id = 0;
         protected decimal price = 0;

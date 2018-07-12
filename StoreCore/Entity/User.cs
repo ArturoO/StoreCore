@@ -5,9 +5,9 @@ using System.Text;
 using StoreCore.Factory;
 using StoreCore.DataMapper;
 
-namespace StoreCore
+namespace StoreCore.Entity
 {
-    class User : Entity
+    class User : AEntity
     {
         protected string username = "";
         protected string password = "";

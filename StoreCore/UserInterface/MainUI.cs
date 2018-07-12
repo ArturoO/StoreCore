@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using StoreCore.Factory;
 
-namespace StoreCore
+namespace StoreCore.UserInterface
 {
     class MainUI: IConsoleUI
     {

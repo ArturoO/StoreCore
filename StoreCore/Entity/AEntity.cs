@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreCore
+namespace StoreCore.Entity
 {
-    abstract class Entity
+    abstract class AEntity
     {
         protected int id = 0;
 

@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using StoreCore.DataMapper;
+using StoreCore.Entity;
 
-namespace StoreCore
+namespace StoreCore.UserInterface
 {
     class UserUI: IConsoleUI
     {

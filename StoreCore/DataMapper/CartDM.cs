@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using StoreCore.Entity;
 
 namespace StoreCore.DataMapper
 {
@@ -81,8 +82,7 @@ namespace StoreCore.DataMapper
                 cmd.Parameters.AddWithValue("@qty", qty);
 
                 var rowsCount = cmd.ExecuteNonQuery();
-                //var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
-                //if (insertedId > 0)
+                
                 if (rowsCount > 0)
                 {                  
                     return true;

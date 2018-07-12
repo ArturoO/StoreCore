@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreCore
+namespace StoreCore.UserInterface
 {
     interface IConsoleUI
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StoreCore
+namespace StoreCore.Entity
 {
-    class Product : Entity
+    class Product : AEntity
     {
         protected string name = "";
         protected string description = "";

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using StoreCore.Factory;
+using StoreCore.UserInterface;
 
 namespace StoreCore
 {
