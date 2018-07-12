@@ -67,33 +67,6 @@ namespace StoreCore.DataMapper
             return cart;
         }
 
-        public static bool AddProduct(Cart cart, Product product, int qty)
-        {
-            using (var client = new SqlConnection(connectionString))
-            {
-                client.Open();
-                StringBuilder sbCmd = new StringBuilder();
-                sbCmd.Append(
-                    "INSERT INTO CartProducts(cart_id, product_id, qty)"
-                    + " VALUES (@cart_id, @product_id, @qty)");
-                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
-                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
-                cmd.Parameters.AddWithValue("@product_id", product.Id);
-                cmd.Parameters.AddWithValue("@qty", qty);
-
-                var rowsCount = cmd.ExecuteNonQuery();
-                
-                if (rowsCount > 0)
-                {                  
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
         public static bool UpdateSummary(Cart cart)
         {
             decimal price = 0;

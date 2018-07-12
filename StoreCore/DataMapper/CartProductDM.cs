@@ -10,6 +10,33 @@ namespace StoreCore.DataMapper
     {
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
 
+        public static bool Create(Cart cart, Product product, int qty)
+        {
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append(
+                    "INSERT INTO CartProducts(cart_id, product_id, qty)"
+                    + " VALUES (@cart_id, @product_id, @qty)");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
+                cmd.Parameters.AddWithValue("@product_id", product.Id);
+                cmd.Parameters.AddWithValue("@qty", qty);
+
+                var rowsCount = cmd.ExecuteNonQuery();
+
+                if (rowsCount > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public static List<CartProduct> ListProducts(Cart cart)
         {
             List<CartProduct> cartProducts = new List<CartProduct>();

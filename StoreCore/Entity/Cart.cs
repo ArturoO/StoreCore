@@ -82,7 +82,7 @@ namespace StoreCore.Entity
         public bool AddProduct(Product product, int qty)
         {
             bool result;
-            result = CartDM.AddProduct(this, product, qty);
+            result = CartProductDM.Create(this, product, qty);
             if (result == false)
                 return false;
 
