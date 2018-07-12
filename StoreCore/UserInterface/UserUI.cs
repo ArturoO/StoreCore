@@ -16,6 +16,7 @@ namespace StoreCore.UserInterface
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
             commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));
             commandsMap.Add("add-to-cart", new CommandInfo(new string[] { "client", "admin" }, AddToCart));
+            commandsMap.Add("view-cart", new CommandInfo(new string[] { "client", "admin" }, ViewCart));            
         }
 
         public void Register()
@@ -96,7 +97,6 @@ namespace StoreCore.UserInterface
         {
             List<User> users = UserDM.list();
 
-            //email, type, username
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
             Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
@@ -129,6 +129,24 @@ namespace StoreCore.UserInterface
                 Console.WriteLine("Product added to cart.");
             else
                 Console.WriteLine("Error: Couldn't add product to cart.");
+        }
+
+        public void ViewCart()
+        {
+            User user = UserFactory.GetCurrentUser();
+            List<CartProduct> cartProducts = user.Cart.Products;
+
+            Console.WriteLine("-----------------------------------------------");
+            Console.WriteLine(" Name      | Price     | Category  | Quantity  ");
+            Console.WriteLine("-----------------------------------------------");
+
+            foreach (var cartProduct in cartProducts)
+            {
+                Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}",
+                   cartProduct.Product.Name, cartProduct.Product.Price, cartProduct.Product.Category, cartProduct.Qty));
+                Console.WriteLine("-----------------------------------------------");
+            }
+            
         }
 
     }

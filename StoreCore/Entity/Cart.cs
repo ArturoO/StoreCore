@@ -13,7 +13,7 @@ namespace StoreCore.Entity
         protected int qty = 0;
 
         protected User user = null;
-        protected List<Product> products = null;
+        protected List<CartProduct> products = null;
         
         public int UserId
         {
@@ -43,7 +43,7 @@ namespace StoreCore.Entity
         {
             get
             {
-                //if(user==null)
+                if(user==null)
                     user = UserDM.FindById(UserId);
                 return user;
             }
@@ -53,12 +53,11 @@ namespace StoreCore.Entity
             }
         }
 
-        public List<Product> Products
+        public List<CartProduct> Products
         {
             get
             {
-                //if(products)
-                products = CartDM.ListProducts(this);
+                products = CartProductDM.ListProducts(this);
                 return products;
             }
             set
@@ -84,7 +83,10 @@ namespace StoreCore.Entity
             return CartDM.AddProduct(this, product, qty);
         }
 
-        
+        //public List<Product> ListProducts()
+        //{
+        //    return CartDM.ListProducts(this);
+        //}
 
     }
 }
