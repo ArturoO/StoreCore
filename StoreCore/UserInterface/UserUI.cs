@@ -146,7 +146,10 @@ namespace StoreCore.UserInterface
                    cartProduct.Product.Name, cartProduct.Product.Price, cartProduct.Product.Category, cartProduct.Qty));
                 Console.WriteLine("-----------------------------------------------");
             }
-            
+
+            Console.WriteLine(String.Format(" Items: {0,39}", user.Cart.Qty));
+            Console.WriteLine(String.Format(" Total: {0,39}", user.Cart.Price));
+            Console.WriteLine("-----------------------------------------------");
         }
 
     }

@@ -94,6 +94,40 @@ namespace StoreCore.DataMapper
             }
         }
 
+        public static bool UpdateSummary(Cart cart)
+        {
+            decimal price = 0;
+            int qty = 0;
+            List<CartProduct> products = cart.Products;
+            foreach(CartProduct product in products)
+            {
+                qty += product.Qty;
+                price += product.Qty*product.Product.Price;                
+            }
+            
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append("UPDATE Cart SET price = @price, qty = @qty WHERE Id=@id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@price", price);                
+                cmd.Parameters.AddWithValue("@qty", qty);
+                cmd.Parameters.AddWithValue("@id", cart.Id);
+
+                var rowsCount = cmd.ExecuteNonQuery();
+
+                if (rowsCount > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public static List<CartProduct> ListProducts(Cart cart)
         {
             List<CartProduct> cartProducts = new List<CartProduct>();

@@ -57,7 +57,8 @@ namespace StoreCore.Entity
         {
             get
             {
-                products = CartProductDM.ListProducts(this);
+                if(products==null)
+                    products = CartProductDM.ListProducts(this);
                 return products;
             }
             set
@@ -80,13 +81,31 @@ namespace StoreCore.Entity
 
         public bool AddProduct(Product product, int qty)
         {
-            return CartDM.AddProduct(this, product, qty);
+            bool result;
+            result = CartDM.AddProduct(this, product, qty);
+            if (result == false)
+                return false;
+
+            Products = CartProductDM.ListProducts(this);
+
+            result = CartDM.UpdateSummary(this);
+            if (result == false)
+                return false;
+
+            //reload details
+            Reload();
+
+            return true;
         }
 
-        //public List<Product> ListProducts()
-        //{
-        //    return CartDM.ListProducts(this);
-        //}
+        public void Reload()
+        {
+            var updated = CartDM.FindByUser(User);
+            Price = updated.Price;
+            Qty = updated.Qty;
 
+            //Products = CartProductDM.ListProducts(this);
+        }
+        
     }
 }
