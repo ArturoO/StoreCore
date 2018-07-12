@@ -137,7 +137,7 @@ namespace StoreCore.DataMapper
             return user;
         }
 
-        public static List<User> list()
+        public static List<User> List()
         {
             List<User> users = new List<User>();
 

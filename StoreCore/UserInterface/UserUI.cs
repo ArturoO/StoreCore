@@ -95,7 +95,7 @@ namespace StoreCore.UserInterface
 
         public void ListUsers()
         {
-            List<User> users = UserDM.list();
+            List<User> users = UserDM.List();
 
             Console.WriteLine("------------------------------------------------------------------------------------------------------");
             Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
