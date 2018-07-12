@@ -103,8 +103,6 @@ namespace StoreCore.Entity
             var updated = CartDM.FindByUser(User);
             Price = updated.Price;
             Qty = updated.Qty;
-
-            //Products = CartProductDM.ListProducts(this);
         }
         
     }

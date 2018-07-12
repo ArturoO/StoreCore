@@ -128,36 +128,5 @@ namespace StoreCore.DataMapper
             }
         }
 
-        public static List<CartProduct> ListProducts(Cart cart)
-        {
-            List<CartProduct> cartProducts = new List<CartProduct>();
-
-            using (var client = new SqlConnection(connectionString))
-            {
-                client.Open();
-                StringBuilder sbCmd = new StringBuilder();
-                sbCmd.Append(
-                    "SELECT cp.* FROM CartProducts AS cp" +
-                    " LEFT JOIN Cartc AS c ON(c.Id = cp.cart_id)" +
-                    " WHERE c.user_id = @user_id");
-                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
-                cmd.Parameters.AddWithValue("@user_id", cart.Id);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        CartProduct cartProduct = new CartProduct();
-                        cartProduct.CartId = int.Parse(reader["cart_id"].ToString());
-                        cartProduct.ProductId = int.Parse(reader["product_id"].ToString());
-                        cartProduct.Qty = int.Parse(reader["qty"].ToString());
-                        cartProducts.Add(cartProduct);
-                    }
-                }
-            }
-            return cartProducts;
-        }
-
-
     }
 }
