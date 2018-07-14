@@ -46,7 +46,8 @@ namespace StoreCore.DataMapper
                 client.Open();
                 StringBuilder sbCmd = new StringBuilder();
                 sbCmd.AppendLine("SELECT * FROM Orders" +
-                    " WHERE user_id = @user_id");
+                    " WHERE user_id = @user_id" +
+                    " ORDER BY date_time DESC");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
                 cmd.Parameters.AddWithValue("@user_id", user.Id);
                 using (var reader = cmd.ExecuteReader())
