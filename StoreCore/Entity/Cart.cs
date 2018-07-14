@@ -98,6 +98,12 @@ namespace StoreCore.Entity
             return true;
         }
 
+        public bool Checkout()
+        {
+            Order.Checkout(this);
+            return true;
+        }
+
         public void Reload()
         {
             var updated = CartDM.FindByUser(User);

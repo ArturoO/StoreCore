@@ -61,6 +61,11 @@ namespace StoreCore.Entity
             }
         }
 
+        public string Name { get { return Product.Name; } set { Product.Name = value; } }
+        public string Description { get { return Product.Description; } set { Product.Description = value; } }
+        public decimal Price { get { return Product.Price; } set { Product.Price = value; } }
+        public string Category { get { return Product.Category; } set { Product.Category = value; } }
+
         public Cart Cart
         {
             get

@@ -11,9 +11,7 @@ namespace StoreCore.Entity
         protected decimal price = 0;
         protected string category = "";
 
-        public Product()
-        {
-        }
+        public Product() { }
 
         public Product(string name, string description, decimal price, string category)
         {
@@ -31,8 +29,6 @@ namespace StoreCore.Entity
             Price = price;
             Category = category;
         }
-
-        
 
         public string Name
         {
@@ -82,54 +78,6 @@ namespace StoreCore.Entity
                 this.category = value;             
             }
         }
-
-        //public bool Create()
-        //{
-        //    var result = ProductDb.Create(Name, Description, Price, Category);
-
-        //    if (result > 0)
-        //    {
-        //        this.id = result;
-        //        return true;
-        //    }
-        //    else
-        //        return false;
-        //}
-
-        //public bool Update()
-        //{
-        //    var result = ProductDb.Update(Id, Name, Description, Price, Category);
-
-        //    if (result > 0)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //        return false;
-        //}
-
-        //public bool Update(Product product)
-        //{
-        //    var result = ProductDb.Update(Id, Name, Description, Price, Category);
-
-        //    if (result > 0)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //        return false;
-        //}
-
-        //public static Product FindById(int id)
-        //{
-        //    return ProductDb.FindById(id);
-        //}
-
-        //public static bool Delete(int id)
-        //{
-        //    return ProductDb.Delete(id);
-        //}
-
 
     }
 }

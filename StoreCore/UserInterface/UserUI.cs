@@ -16,7 +16,8 @@ namespace StoreCore.UserInterface
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
             commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));
             commandsMap.Add("add-to-cart", new CommandInfo(new string[] { "client", "admin" }, AddToCart));
-            commandsMap.Add("view-cart", new CommandInfo(new string[] { "client", "admin" }, ViewCart));            
+            commandsMap.Add("view-cart", new CommandInfo(new string[] { "client", "admin" }, ViewCart));
+            commandsMap.Add("checkout", new CommandInfo(new string[] { "client", "admin" }, Checkout));
         }
 
         public void Register()
@@ -150,6 +151,27 @@ namespace StoreCore.UserInterface
             Console.WriteLine(String.Format(" Items: {0,39}", user.Cart.Qty));
             Console.WriteLine(String.Format(" Total: {0,39}", user.Cart.Price));
             Console.WriteLine("-----------------------------------------------");
+        }
+
+        public void Checkout()
+        {
+            User user = UserFactory.GetCurrentUser();
+
+            Console.WriteLine("You're about to make a new order.");
+            Console.WriteLine($"Currently you have {user.Cart.Qty} products in your cart, total price is: {user.Cart.Price}.");
+            Console.WriteLine("Do you want to proceed? (yes/no)");
+
+            string input = Console.ReadLine();
+            if (input == "yes")
+            {
+                user.Cart.Checkout();
+                Console.WriteLine("Order has been made.");
+            }
+            else
+            {
+                Console.WriteLine("Checkout canceled.");
+            }
+
         }
 
     }
