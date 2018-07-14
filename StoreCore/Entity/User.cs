@@ -20,6 +20,7 @@ namespace StoreCore.Entity
 
         protected Cart cart = null;
 
+
         public User()
         {
         }

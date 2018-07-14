@@ -18,6 +18,7 @@ namespace StoreCore.UserInterface
             commandsMap.Add("add-to-cart", new CommandInfo(new string[] { "client", "admin" }, AddToCart));
             commandsMap.Add("view-cart", new CommandInfo(new string[] { "client", "admin" }, ViewCart));
             commandsMap.Add("checkout", new CommandInfo(new string[] { "client", "admin" }, Checkout));
+            commandsMap.Add("list-orders", new CommandInfo(new string[] { "client", "admin" }, ListOrders));
         }
 
         public void Register()
@@ -171,8 +172,27 @@ namespace StoreCore.UserInterface
             {
                 Console.WriteLine("Checkout canceled.");
             }
+        }
+
+        public void ListOrders()
+        {
+            User user = UserFactory.GetCurrentUser();
+
+            List<Order> orders = OrderDM.ListByUser(user);
+
+            Console.WriteLine("---------------------------------------------------------------------");
+            Console.WriteLine(" Id        | Date                | Status    | Quantity  | Total     ");
+            Console.WriteLine("---------------------------------------------------------------------");
+
+            foreach (var order in orders)
+            {
+                Console.WriteLine(String.Format(" {0,-10}| {1,-20}| {2,-10}| {3,-10}| {4,-10}",
+                   order.Id,order.DateTime,order.Status,order.Qty, order.Total));
+                Console.WriteLine("---------------------------------------------------------------------");
+            }
 
         }
+
 
     }
 }

@@ -37,7 +37,36 @@ namespace StoreCore.DataMapper
             }
         }
 
+        public static List<Order> ListByUser(User user)
+        {
+            List<Order> orders = new List<Order>();
 
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendLine("SELECT * FROM Orders" +
+                    " WHERE user_id = @user_id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@user_id", user.Id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = int.Parse(reader["Id"].ToString());
+                        int user_id = int.Parse(reader["user_id"].ToString());
+                        DateTime date_time = DateTime.Parse(reader["date_time"].ToString());
+                        decimal total = decimal.Parse(reader["total"].ToString());
+                        int qty = int.Parse(reader["qty"].ToString());
+                        string status = reader["status"].ToString();
+                        
+                        Order order = new Order(id, user_id, date_time, total, qty, status);
+                        orders.Add(order);
+                    }
+                }
+            }
+            return orders;
+        }
 
 
     }

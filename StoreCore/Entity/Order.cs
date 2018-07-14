@@ -51,6 +51,18 @@ namespace StoreCore.Entity
             }
         }
 
+        public Order() { }
+
+        public Order(int id, int user_id, DateTime date_time, decimal total, int qty, string status)
+        {
+            Id = id;
+            UserId = user_id;
+            DateTime = date_time;
+            Total = total;
+            Qty = qty;
+            Status = status;
+        }
+
         public void AddProduct(OrderProduct orderProduct)
         {
             Products.Add(orderProduct);            
