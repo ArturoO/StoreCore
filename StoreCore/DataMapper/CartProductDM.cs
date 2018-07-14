@@ -56,6 +56,7 @@ namespace StoreCore.DataMapper
                     while (reader.Read())
                     {
                         CartProduct cartProduct = new CartProduct();
+                        cartProduct.Id = int.Parse(reader["Id"].ToString());
                         cartProduct.CartId = int.Parse(reader["cart_id"].ToString());
                         cartProduct.ProductId = int.Parse(reader["product_id"].ToString());
                         cartProduct.Qty = int.Parse(reader["qty"].ToString());
