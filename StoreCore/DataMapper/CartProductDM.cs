@@ -66,5 +66,22 @@ namespace StoreCore.DataMapper
             return cartProducts;
         }
 
+        public static int RemoveProducts(Cart cart)
+        {
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append(
+                    "DELETE FROM CartProducts " +
+                    " WHERE cart_id = @cart_id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
+
+                var rows = cmd.ExecuteNonQuery();
+                return rows;
+            }
+        }
+
     }
 }

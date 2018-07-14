@@ -77,6 +77,8 @@ namespace StoreCore.DataMapper
                 qty += product.Qty;
                 price += product.Qty*product.Product.Price;                
             }
+            cart.Qty = qty;
+            cart.Price = price;
             
             using (var client = new SqlConnection(connectionString))
             {

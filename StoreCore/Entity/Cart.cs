@@ -101,7 +101,19 @@ namespace StoreCore.Entity
         public bool Checkout()
         {
             Order.Checkout(this);
+            Clear();
+
             return true;
+        }
+
+        /// <summary>
+        /// Removes all items from the cart, sets price and quantity to 0
+        /// </summary>
+        public void Clear()
+        {
+            CartProductDM.RemoveProducts(this);
+            Products = null;
+            CartDM.UpdateSummary(this);
         }
 
         public void Reload()

@@ -83,7 +83,6 @@ namespace StoreCore.Entity
 
             OrderDM.Create(order);
             OrderProductDM.AddProducts(order);
-
             return true;
         }
 
