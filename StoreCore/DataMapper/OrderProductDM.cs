@@ -53,10 +53,35 @@ namespace StoreCore.DataMapper
         public static List<OrderProduct> ListProducts(Order order)
         {
             List<OrderProduct> products = new List<OrderProduct>();
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append(
+                    "SELECT * FROM OrderProducts " +
+                    " WHERE order_id = @order_id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@order_id", order.Id);
 
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        OrderProduct product = new OrderProduct();
+                        product.Id = int.Parse(reader["Id"].ToString());
+                        product.OrderId = int.Parse(reader["order_id"].ToString());
+                        product.Qty = int.Parse(reader["qty"].ToString());
+                        product.Name = reader["name"].ToString();
+                        product.Description = reader["description"].ToString();
+                        product.Price = decimal.Parse(reader["price"].ToString());
+                        product.Category = reader["category"].ToString();
+                        
+                        products.Add(product);
+                    }
+                }
+            }
             return products;
-
         }
-
+       
     }
 }

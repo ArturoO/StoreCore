@@ -69,6 +69,37 @@ namespace StoreCore.DataMapper
             return orders;
         }
 
+        public static Order FindById(int Id)
+        {
+            Order order = new Order();
+
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.AppendLine("SELECT * FROM Orders" +
+                    " WHERE Id = @Id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@Id", Id);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = int.Parse(reader["Id"].ToString());
+                        int user_id = int.Parse(reader["user_id"].ToString());
+                        DateTime date_time = DateTime.Parse(reader["date_time"].ToString());
+                        decimal total = decimal.Parse(reader["total"].ToString());
+                        int qty = int.Parse(reader["qty"].ToString());
+                        string status = reader["status"].ToString();
+
+                        order = new Order(id, user_id, date_time, total, qty, status);
+                    }
+                }
+            }
+
+            return order;
+        }
+
 
     }
 }
