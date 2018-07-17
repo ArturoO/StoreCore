@@ -79,7 +79,28 @@ namespace StoreCore.UserInterface
 
         public void Remove()
         {
+            Console.WriteLine("Please provide product Id.");
+            int productId = int.Parse(Console.ReadLine());
+            
+            Product product = ProductDM.FindById(productId);
+            if (product.Id == 0)
+            {
+                Console.WriteLine("Error: Product doesn't exists.");
+                return;
+            }
 
+            User user = UserFactory.GetCurrentUser();
+            if (!user.Cart.ProductExists(product))
+            {
+                Console.WriteLine("Error: You can't remove product that wasn't added to cart.");
+                return;
+            }
+
+            bool result = user.Cart.RemoveProduct(product);
+            if (result)
+                Console.WriteLine("Product removed from cart.");
+            else
+                Console.WriteLine("Error: Couldn't remove product from cart.");
         }
 
         public void View()

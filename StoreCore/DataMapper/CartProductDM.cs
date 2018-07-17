@@ -45,10 +45,39 @@ namespace StoreCore.DataMapper
                 StringBuilder sbCmd = new StringBuilder();
                 sbCmd.Append(
                     "UPDATE CartProducts SET qty=@qty" +
-                    " WHERE product_id=@product_id");
+                    " WHERE product_id=@product_id" +
+                    " AND cart_id=@cart_id");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);                
                 cmd.Parameters.AddWithValue("@product_id", product.Id);
+                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
                 cmd.Parameters.AddWithValue("@qty", qty);
+
+                var rowsCount = cmd.ExecuteNonQuery();
+
+                if (rowsCount > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static bool Remove(Cart cart, Product product)
+        {
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append(
+                    "DELETE FROM CartProducts " +
+                    " WHERE product_id=@product_id" +
+                    " AND cart_id=@cart_id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@product_id", product.Id);
+                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
 
                 var rowsCount = cmd.ExecuteNonQuery();
 

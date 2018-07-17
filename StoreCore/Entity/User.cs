@@ -222,15 +222,5 @@ namespace StoreCore.Entity
             
         }
 
-        //public bool AddToCart(Product product, int qty)
-        //{
-        //    return Cart.AddProduct(product, qty);
-        //}
-
-        //public bool CartUpdate(Product product, int qty)
-        //{
-        //    return Cart.Update(product, qty);
-        //}
-
     }
 }
