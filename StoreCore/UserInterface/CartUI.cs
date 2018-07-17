@@ -34,6 +34,12 @@ namespace StoreCore.UserInterface
             }
 
             User user = UserFactory.GetCurrentUser();
+            if (user.Cart.ProductExists(product))
+            {
+                Console.WriteLine("Error: Product already exists in cart. Use 'cart-update' to change the quantity.");
+                return;
+            }
+
             //bool result = user.AddToCart(product, qty);
             bool result = user.Cart.AddProduct(product, qty);
             if (result)
