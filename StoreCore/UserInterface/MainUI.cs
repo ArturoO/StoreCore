@@ -65,7 +65,7 @@ namespace StoreCore.UserInterface
         public void Help()
         {            
             string userType = UserFactory.GetCurrentUserType();
-            List<string> commandsList = new List<string>();
+            List<string> commandsList = new List<string> { "exit" };
             foreach (var commandMap in this.commandsMap)
             {
                 if (Array.IndexOf(commandMap.Value.users, userType) >= 0)
