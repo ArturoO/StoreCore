@@ -14,10 +14,7 @@ namespace StoreCore.UserInterface
             commandsMap.Add("register", new CommandInfo(new string[] { "guest" }, Register));
             commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
-            commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));
-            
-            commandsMap.Add("list-orders", new CommandInfo(new string[] { "client", "admin" }, ListOrders));
-            commandsMap.Add("view-order", new CommandInfo(new string[] { "client", "admin" }, ViewOrder));
+            commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));            
         }
 
         public void Register()
