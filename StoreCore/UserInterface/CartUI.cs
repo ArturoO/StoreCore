@@ -21,26 +21,30 @@ namespace StoreCore.UserInterface
 
         public void Add()
         {
+            User user = UserFactory.GetCurrentUser();
+
             Console.WriteLine("Please provide product Id.");
             int productId = int.Parse(Console.ReadLine());
-            Console.WriteLine("Please provide quantity.");
-            int qty = int.Parse(Console.ReadLine());
-
             Product product = ProductDM.FindById(productId);
             if (product.Id == 0)
             {
                 Console.WriteLine("Error: Product doesn't exists.");
                 return;
             }
-
-            User user = UserFactory.GetCurrentUser();
             if (user.Cart.ProductExists(product))
             {
                 Console.WriteLine("Error: Product already exists in cart. Use 'cart-update' to change the quantity.");
                 return;
             }
 
-            //bool result = user.AddToCart(product, qty);
+            Console.WriteLine("Please provide quantity.");
+            int qty = int.Parse(Console.ReadLine());
+            if(qty<=0)
+            {
+                Console.WriteLine("Error: Quantity must be a positive number.");
+                return;
+            }
+
             bool result = user.Cart.AddProduct(product, qty);
             if (result)
                 Console.WriteLine("Product added to cart.");
@@ -50,26 +54,29 @@ namespace StoreCore.UserInterface
 
         public void Update()
         {
+            User user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
             int productId = int.Parse(Console.ReadLine());
-            Console.WriteLine("Please provide new quantity.");
-            int qty = int.Parse(Console.ReadLine());
-
             Product product = ProductDM.FindById(productId);
             if (product.Id == 0)
             {
                 Console.WriteLine("Error: Product doesn't exists.");
                 return;
             }
-
-            User user = UserFactory.GetCurrentUser();
             if (!user.Cart.ProductExists(product))
             {
                 Console.WriteLine("Error: You must first add product to cart.");
                 return;
             }
 
-            //bool result = user.CartUpdate(product, qty);
+            Console.WriteLine("Please provide new quantity.");
+            int qty = int.Parse(Console.ReadLine());
+            if (qty <= 0)
+            {
+                Console.WriteLine("Error: Quantity must be a positive number.");
+                return;
+            }
+
             bool result = user.Cart.UpdateProduct(product, qty);
             if (result)
                 Console.WriteLine("Cart updated.");
@@ -79,17 +86,15 @@ namespace StoreCore.UserInterface
 
         public void Remove()
         {
+            User user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
             int productId = int.Parse(Console.ReadLine());
-            
             Product product = ProductDM.FindById(productId);
             if (product.Id == 0)
             {
                 Console.WriteLine("Error: Product doesn't exists.");
                 return;
             }
-
-            User user = UserFactory.GetCurrentUser();
             if (!user.Cart.ProductExists(product))
             {
                 Console.WriteLine("Error: You can't remove product that wasn't added to cart.");
