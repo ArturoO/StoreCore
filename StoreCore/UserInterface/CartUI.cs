@@ -12,12 +12,14 @@ namespace StoreCore.UserInterface
         
         public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
-            commandsMap.Add("cart-add-product", new CommandInfo(new string[] { "client", "admin" }, AddToCart));
-            commandsMap.Add("view-cart", new CommandInfo(new string[] { "client", "admin" }, ViewCart));
+            commandsMap.Add("cart-add", new CommandInfo(new string[] { "client", "admin" }, Add));
+            commandsMap.Add("cart-update", new CommandInfo(new string[] { "client", "admin" }, Update));
+            commandsMap.Add("cart-remove", new CommandInfo(new string[] { "client", "admin" }, Remove));
+            commandsMap.Add("cart-view", new CommandInfo(new string[] { "client", "admin" }, View));
             commandsMap.Add("checkout", new CommandInfo(new string[] { "client", "admin" }, Checkout));
         }
 
-        public void AddToCart()
+        public void Add()
         {
             Console.WriteLine("Please provide product Id.");
             int productId = int.Parse(Console.ReadLine());
@@ -39,7 +41,17 @@ namespace StoreCore.UserInterface
                 Console.WriteLine("Error: Couldn't add product to cart.");
         }
 
-        public void ViewCart()
+        public void Update()
+        {
+
+        }
+
+        public void Remove()
+        {
+
+        }
+
+        public void View()
         {
             User user = UserFactory.GetCurrentUser();
             List<CartProduct> cartProducts = user.Cart.Products;
