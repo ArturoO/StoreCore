@@ -16,6 +16,7 @@ namespace StoreCore.UserInterface
             consoleUIs.Add("MainUI", this);
             consoleUIs.Add("UserUI", new UserUI());
             consoleUIs.Add("ProductUI", new ProductUI());
+            consoleUIs.Add("CartUI", new CartUI());
 
             commandsMap = new Dictionary<string, CommandInfo>();
             foreach (var consoleUI in consoleUIs)
