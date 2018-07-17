@@ -98,6 +98,40 @@ namespace StoreCore.Entity
             return true;
         }
 
+        /// <summary>
+        /// Checks if specified product is in the Cart
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public bool ProductExists(Product product)
+        {
+            foreach(var cartProduct in Products)
+            {
+                if (cartProduct.ProductId == product.Id)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool UpdateProduct(Product product, int qty)
+        {
+            bool result;
+            result = CartProductDM.Update(this, product, qty);
+            if (result == false)
+                return false;
+
+            Products = CartProductDM.ListProducts(this);
+
+            result = CartDM.UpdateSummary(this);
+            if (result == false)
+                return false;
+
+            //reload details
+            Reload();
+
+            return true;
+        }
+
         public bool Checkout()
         {
             Order.Checkout(this);
