@@ -12,6 +12,7 @@ namespace StoreCore.DataMapper
 
         public static bool Create(Order order)
         {
+            int insertedId = 0;
             using (var client = new SqlConnection(connectionString))
             {
                 client.Open();
@@ -24,17 +25,17 @@ namespace StoreCore.DataMapper
                 cmd.Parameters.AddWithValue("@total", order.Total);
                 cmd.Parameters.AddWithValue("@qty", order.Qty);
 
-                var insertedId = int.Parse(cmd.ExecuteScalar().ToString());
+                insertedId = int.Parse(cmd.ExecuteScalar().ToString());
                 if (insertedId > 0)
-                {
                     order.Id = insertedId;
-                    return true;
-                }
                 else
-                { 
                     return false;
-                }
             }
+
+            foreach (var product in order.Products)
+                OrderProductDM.Create(product);
+
+            return true;
         }
 
         public static List<Order> ListByUser(User user)
