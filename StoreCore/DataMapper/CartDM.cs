@@ -67,20 +67,29 @@ namespace StoreCore.DataMapper
             return cart;
         }
 
-        public static bool AddProduct(Cart cart, Product product, int qty)
+        public static bool AddProduct(CartProduct cartProduct)
         {
             bool result;
-            result = CartProductDM.Create(cart, product, qty);
-            if (result == false)
-                return false;
+            result = CartProductDM.Create(cartProduct);
 
-            result = CartDM.UpdateSummary(cart);
-            if (result == false)
-                return false;
-
-            return true;
+            return result;
         }
 
+        public static bool UpdateProduct(CartProduct cartProduct)
+        {
+            bool result;
+            result = CartProductDM.Update(cartProduct);
+
+            return result;
+        }
+
+        public static bool RemoveProduct(CartProduct cartProduct)
+        {
+            bool result;
+            result = CartProductDM.Remove(cartProduct);
+
+            return result;
+        }
 
         public static bool UpdateSummary(Cart cart)
         {

@@ -10,9 +10,8 @@ namespace StoreCore.DataMapper
     {
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
 
-        public static bool Create(Cart cart, Product product, int qty)
+        public static bool Create(CartProduct cartProduct)
         {
-            CartProduct cartProduct = new CartProduct();
             using (var client = new SqlConnection(connectionString))
             {
                 client.Open();
@@ -21,19 +20,14 @@ namespace StoreCore.DataMapper
                     "INSERT INTO CartProducts(cart_id, product_id, qty)"
                     + " VALUES (@cart_id, @product_id, @qty)");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
-                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
-                cmd.Parameters.AddWithValue("@product_id", product.Id);
-                cmd.Parameters.AddWithValue("@qty", qty);
+                cmd.Parameters.AddWithValue("@cart_id", cartProduct.CartId);
+                cmd.Parameters.AddWithValue("@product_id", cartProduct.ProductId);
+                cmd.Parameters.AddWithValue("@qty", cartProduct.Qty);
 
                 var rowsCount = cmd.ExecuteNonQuery();
 
                 if (rowsCount > 0)
                 {
-                    cartProduct.CartId = cart.Id;
-                    cartProduct.ProductId = product.Id;
-                    cartProduct.Qty = qty;
-                    cart.Products.Add(cartProduct);
-                    //cart.Products
                     return true;
                 }
                 else
@@ -43,8 +37,42 @@ namespace StoreCore.DataMapper
             }
         }
 
-        public static bool Update(Cart cart, Product product, int qty)
+        //public static bool Create(Cart cart, Product product, int qty)
+        //{
+        //    CartProduct cartProduct = new CartProduct();
+        //    using (var client = new SqlConnection(connectionString))
+        //    {
+        //        client.Open();
+        //        StringBuilder sbCmd = new StringBuilder();
+        //        sbCmd.Append(
+        //            "INSERT INTO CartProducts(cart_id, product_id, qty)"
+        //            + " VALUES (@cart_id, @product_id, @qty)");
+        //        SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+        //        cmd.Parameters.AddWithValue("@cart_id", cart.Id);
+        //        cmd.Parameters.AddWithValue("@product_id", product.Id);
+        //        cmd.Parameters.AddWithValue("@qty", qty);
+
+        //        var rowsCount = cmd.ExecuteNonQuery();
+
+        //        if (rowsCount > 0)
+        //        {
+        //            cartProduct.CartId = cart.Id;
+        //            cartProduct.ProductId = product.Id;
+        //            cartProduct.Qty = qty;
+        //            cart.Products.Add(cartProduct);
+        //            //cart.Products
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //}
+
+        public static bool Update(CartProduct cartProduct)
         {
+            //CartProduct cartProduct = new CartProduct();
             using (var client = new SqlConnection(connectionString))
             {
                 client.Open();
@@ -54,9 +82,9 @@ namespace StoreCore.DataMapper
                     " WHERE product_id=@product_id" +
                     " AND cart_id=@cart_id");
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);                
-                cmd.Parameters.AddWithValue("@product_id", product.Id);
-                cmd.Parameters.AddWithValue("@cart_id", cart.Id);
-                cmd.Parameters.AddWithValue("@qty", qty);
+                cmd.Parameters.AddWithValue("@product_id", cartProduct.ProductId);
+                cmd.Parameters.AddWithValue("@cart_id", cartProduct.CartId);
+                cmd.Parameters.AddWithValue("@qty", cartProduct.Qty);
 
                 var rowsCount = cmd.ExecuteNonQuery();
 
@@ -84,6 +112,33 @@ namespace StoreCore.DataMapper
                 SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
                 cmd.Parameters.AddWithValue("@product_id", product.Id);
                 cmd.Parameters.AddWithValue("@cart_id", cart.Id);
+
+                var rowsCount = cmd.ExecuteNonQuery();
+
+                if (rowsCount > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static bool Remove(CartProduct cartProduct)
+        {
+            using (var client = new SqlConnection(connectionString))
+            {
+                client.Open();
+                StringBuilder sbCmd = new StringBuilder();
+                sbCmd.Append(
+                    "DELETE FROM CartProducts " +
+                    " WHERE product_id=@product_id" +
+                    " AND cart_id=@cart_id");
+                SqlCommand cmd = new SqlCommand(sbCmd.ToString(), client);
+                cmd.Parameters.AddWithValue("@product_id", cartProduct.ProductId);
+                cmd.Parameters.AddWithValue("@cart_id", cartProduct.CartId);
 
                 var rowsCount = cmd.ExecuteNonQuery();
 

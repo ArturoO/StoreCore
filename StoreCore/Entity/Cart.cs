@@ -80,60 +80,90 @@ namespace StoreCore.Entity
         }
 
         /// <summary>
-        /// Checks if specified product is in the Cart
+        /// Checks if specified productId is in the Cart
         /// </summary>
-        /// <param name="product"></param>
+        /// <param name="productId"></param>
         /// <returns></returns>
-        public bool ProductExists(Product product)
+        public bool ProductExists(int productId)
         {
             foreach (var cartProduct in Products)
             {
-                if (cartProduct.ProductId == product.Id)
+                if (cartProduct.ProductId == productId)
                     return true;
+            }
+            return false;
+        }
+
+        protected bool ProductReplace(CartProduct product)
+        {
+            for(var i=0; i<Products.Count; i++)
+            {
+                if(Products[i].ProductId == product.ProductId)
+                {
+                    Products[i] = product;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        protected bool ProductRemove(CartProduct product)
+        {
+            for (var i = 0; i < Products.Count; i++)
+            {
+                if (Products[i].ProductId == product.ProductId)
+                {
+                    Products.RemoveAt(i);
+                    //Products[i] = product;
+                    return true;
+                }
             }
             return false;
         }
 
         public bool AddProduct(Product product, int qty)
         {
-            return CartDM.AddProduct(this, product, qty);
+            bool result;
+            CartProduct cartProduct = new CartProduct(Id, product.Id, qty);
+            result = CartDM.AddProduct(cartProduct);
+            if (result)
+            {
+                Products.Add(cartProduct);
+                CartDM.UpdateSummary(this);
+            }
+            return result;
         }
 
         public bool UpdateProduct(Product product, int qty)
         {
             bool result;
-            result = CartProductDM.Update(this, product, qty);
-            if (result == false)
-                return false;
 
-            Products = CartProductDM.ListProducts(this);
+            CartProduct cartProduct = new CartProduct(Id, product.Id, qty);
 
-            result = CartDM.UpdateSummary(this);
-            if (result == false)
-                return false;
+            result = CartDM.UpdateProduct(cartProduct);
+            if(result)
+            {
+                ProductReplace(cartProduct);
+                CartDM.UpdateSummary(this);
+            }
 
-            //reload details
-            Reload();
-
-            return true;
+            return result;
+           
         }
 
         public bool RemoveProduct(Product product)
         {
             bool result;
-            result = CartProductDM.Remove(this, product);
-            if (result == false)
-                return false;
 
-            Products = CartProductDM.ListProducts(this);
+            CartProduct cartProduct = new CartProduct(Id, product.Id);
 
-            result = CartDM.UpdateSummary(this);
-            if (result == false)
-                return false;
-
-            Reload();
-
-            return true;
+            result = CartDM.RemoveProduct(cartProduct);
+            if (result)
+            {
+                ProductRemove(cartProduct);
+                CartDM.UpdateSummary(this);
+            }
+            return result;
         }
 
         public bool Checkout()

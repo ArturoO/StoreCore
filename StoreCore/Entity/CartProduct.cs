@@ -33,6 +33,12 @@ namespace StoreCore.Entity
             Qty = qty;
         }
 
+        public CartProduct(int cart_id, int product_id)
+        {
+            CartId = cart_id;
+            ProductId = product_id;
+        }
+
         public int CartId
         {
             get

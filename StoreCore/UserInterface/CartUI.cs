@@ -31,7 +31,7 @@ namespace StoreCore.UserInterface
                 Console.WriteLine("Error: Product doesn't exists.");
                 return;
             }
-            if (user.Cart.ProductExists(product))
+            if (user.Cart.ProductExists(productId))
             {
                 Console.WriteLine("Error: Product already exists in cart. Use 'cart-update' to change the quantity.");
                 return;
@@ -63,7 +63,7 @@ namespace StoreCore.UserInterface
                 Console.WriteLine("Error: Product doesn't exists.");
                 return;
             }
-            if (!user.Cart.ProductExists(product))
+            if (!user.Cart.ProductExists(productId))
             {
                 Console.WriteLine("Error: You must first add product to cart.");
                 return;
@@ -95,7 +95,7 @@ namespace StoreCore.UserInterface
                 Console.WriteLine("Error: Product doesn't exists.");
                 return;
             }
-            if (!user.Cart.ProductExists(product))
+            if (!user.Cart.ProductExists(productId))
             {
                 Console.WriteLine("Error: You can't remove product that wasn't added to cart.");
                 return;
