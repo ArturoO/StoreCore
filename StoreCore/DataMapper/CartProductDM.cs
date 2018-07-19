@@ -12,6 +12,7 @@ namespace StoreCore.DataMapper
 
         public static bool Create(Cart cart, Product product, int qty)
         {
+            CartProduct cartProduct = new CartProduct();
             using (var client = new SqlConnection(connectionString))
             {
                 client.Open();
@@ -28,6 +29,11 @@ namespace StoreCore.DataMapper
 
                 if (rowsCount > 0)
                 {
+                    cartProduct.CartId = cart.Id;
+                    cartProduct.ProductId = product.Id;
+                    cartProduct.Qty = qty;
+                    cart.Products.Add(cartProduct);
+                    //cart.Products
                     return true;
                 }
                 else

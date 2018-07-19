@@ -96,21 +96,7 @@ namespace StoreCore.Entity
 
         public bool AddProduct(Product product, int qty)
         {
-            bool result;
-            result = CartProductDM.Create(this, product, qty);
-            if (result == false)
-                return false;
-
-            Products = CartProductDM.ListProducts(this);
-
-            result = CartDM.UpdateSummary(this);
-            if (result == false)
-                return false;
-
-            //reload details
-            Reload();
-
-            return true;
+            return CartDM.AddProduct(this, product, qty);
         }
 
         public bool UpdateProduct(Product product, int qty)
