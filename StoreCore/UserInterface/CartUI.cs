@@ -7,7 +7,7 @@ using StoreCore.Entity;
 
 namespace StoreCore.UserInterface
 {
-    class CartUI: IConsoleUI
+    public class CartUI: IConsoleUI
     {
         
         public void registerCommands(Dictionary<string, CommandInfo> commandsMap)

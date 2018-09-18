@@ -7,7 +7,7 @@ using StoreCore.DataMapper;
 
 namespace StoreCore.Entity
 {
-    class User : AEntity
+    public class User : AEntity
     {
         protected string username = "";
         protected string password = "";

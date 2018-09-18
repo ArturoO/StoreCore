@@ -5,7 +5,7 @@ using StoreCore.DataMapper;
 
 namespace StoreCore.Entity
 {
-    class CartProduct: AEntity
+    public class CartProduct : AEntity
     {
         protected int cart_id = 0;
         protected Cart cart = null;

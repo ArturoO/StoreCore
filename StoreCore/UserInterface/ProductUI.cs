@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace StoreCore.UserInterface
 {
-    class ProductUI: IConsoleUI
+    public class ProductUI : IConsoleUI
     {
         
         public void registerCommands(Dictionary<string, CommandInfo> commandsMap)

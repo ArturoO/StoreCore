@@ -6,7 +6,7 @@ using StoreCore.Entity;
 
 namespace StoreCore.DataMapper
 {
-    class OrderDM
+    public class OrderDM
     {
         protected const string connectionString = "Data Source=ARTUROO-PC;Initial Catalog=Store;Integrated Security=True;Pooling=False";
 

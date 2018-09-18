@@ -7,7 +7,7 @@ using StoreCore.Factory;
 
 namespace StoreCore.UserInterface
 {
-    class OrderUI: IConsoleUI
+    public class OrderUI : IConsoleUI
     {
         public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {

@@ -6,7 +6,7 @@ using StoreCore.Factory;
 
 namespace StoreCore.Entity
 {
-    class OrderProduct:AEntity
+    public class OrderProduct :AEntity
     {
         protected int order_id;
         protected int qty = 0;

@@ -6,7 +6,7 @@ using StoreCore.Factory;
 
 namespace StoreCore.Entity
 {
-    class Order:AEntity
+    public class Order :AEntity
     {
         protected int user_id;
         protected DateTime date_time;

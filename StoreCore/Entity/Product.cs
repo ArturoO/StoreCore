@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoreCore.Entity
 {
-    class Product : AEntity
+    public class Product : AEntity
     {
         protected string name = "";
         protected string description = "";

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace StoreCore.UserInterface
 {
-    interface IConsoleUI
+    public interface IConsoleUI
     {
         void registerCommands(Dictionary<string, CommandInfo> commandsMap);
     }
 
-    struct CommandInfo
+    public struct CommandInfo
     {
         public string[] users;
         public Action callable;
