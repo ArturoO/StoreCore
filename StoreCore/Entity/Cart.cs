@@ -6,7 +6,7 @@ using StoreCore.Factory;
 
 namespace StoreCore.Entity
 {
-    class Cart: AEntity
+    public class Cart: AEntity
     {
         protected int user_id = 0;
         protected decimal price = 0;

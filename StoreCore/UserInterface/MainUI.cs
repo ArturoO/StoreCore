@@ -5,7 +5,7 @@ using StoreCore.Factory;
 
 namespace StoreCore.UserInterface
 {
-    class MainUI: IConsoleUI
+    public class MainUI : IConsoleUI
     {
         protected Dictionary<string, IConsoleUI> consoleUIs;
         protected Dictionary<string, CommandInfo> commandsMap;

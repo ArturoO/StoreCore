@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoreCore.Entity
 {
-    abstract class AEntity
+    public abstract class AEntity
     {
         protected int id = 0;
 
