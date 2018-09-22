@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using StoreCore.DataMapper;
 using StoreCore.Entity;
 using StoreCore.Factory;
@@ -34,15 +35,21 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide user age.");
             int age = int.Parse(Console.ReadLine());
 
-            User user = new User(firstName, lastName, gender, age, username, "client", email);            
+            User2 user = new User2(firstName, lastName, gender, age, username, "client", email);
+            //User user = new User(firstName, lastName, gender, age, username, "client", email);
             user.HashPassword(password);
 
-            bool result = UserDM.Register(user);
+            using (var context = new StoreContext())
+            {
+                context.Users.Add(user);
+                var result = context.SaveChanges();
+                if (result==1)
+                    Console.WriteLine($"User added, ID: {user.Id}.");
+                else
+                    Console.WriteLine("User not added.");
+            }
 
-            if (result)
-                Console.WriteLine($"User added, ID: {user.Id}.");
-            else
-                Console.WriteLine("User not added.");
+            //bool result = UserDM.Register(user);
         }
 
         public void Login()
@@ -51,22 +58,27 @@ namespace StoreCore.UserInterface
             String username = Console.ReadLine();
             Console.WriteLine("Please provide password.");
             String password = Console.ReadLine();
-            
-            User user = UserDM.FindByUsername(username);
-            var result = user.ValidatePassword(password);
 
-            if (result)
+            using (var context = new StoreContext())
             {
-                UserFactory.SetCurrentUser(user);
-                Console.WriteLine("Logged in.");
+                var user = context.Users.Single(x => x.Username == username);
+                var result = user.ValidatePassword(password);
+
+                if (result)
+                {
+                    UserFactory.SetCurrentUser2(user);
+                    Console.WriteLine("Logged in.");
+                }
+                else
+                    Console.WriteLine("Error: credentials incorrect.");
             }
-            else
-                Console.WriteLine("Error: credentials incorrect.");
+
         }
 
         public void Logout()
         {
             UserFactory.SetCurrentUserAsGuest();
+            UserFactory.SetCurrentUserAsGuest2();
             //UserFactory.SetCurrentUser(null);
             Console.WriteLine("You were logged out.");
         }

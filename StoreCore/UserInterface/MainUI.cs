@@ -66,7 +66,8 @@ namespace StoreCore.UserInterface
 
         public void Help()
         {            
-            string userType = UserFactory.GetCurrentUserType();
+            //string userType = UserFactory.GetCurrentUserType();
+            string userType = UserFactory.GetCurrentUserType2();
             List<string> commandsList = new List<string> { "exit" };
             foreach (var commandMap in this.commandsMap)
             {
