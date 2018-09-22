@@ -50,7 +50,8 @@ namespace StoreCore.UserInterface
 
         public bool CurrentUserCan(CommandInfo commandInfo)
         {
-            string userType = UserFactory.GetCurrentUserType();
+            //string userType = UserFactory.GetCurrentUserType();
+            string userType = UserFactory.GetCurrentUserType2();
             int result = Array.IndexOf(commandInfo.users, userType);
             if (result >= 0)
                 return true;
