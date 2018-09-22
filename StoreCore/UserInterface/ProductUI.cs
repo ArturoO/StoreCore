@@ -70,13 +70,24 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
-            Product product = new Product(productName, productDescription, productPrice, productCategory);
-            bool result = ProductDM.Create(product);
+            Product2 product = new Product2(productName, productDescription, productPrice, productCategory);
 
-            if (result)
-                Console.WriteLine($"Product added, Id: {product.Id} .");
-            else
-                Console.WriteLine("Product not added.");
+            using (var context = new StoreContext())
+            {
+                context.Products.Add(product);
+                var result = context.SaveChanges();
+                if (result==1)
+                    Console.WriteLine($"Product added, Id: {product.Id} .");
+                else
+                    Console.WriteLine("Product not added.");
+            }
+
+            //bool result = ProductDM.Create(product);
+
+            //if (result)
+            //    Console.WriteLine($"Product added, Id: {product.Id} .");
+            //else
+            //    Console.WriteLine("Product not added.");
 
         }
 
