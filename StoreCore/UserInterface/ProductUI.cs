@@ -55,13 +55,24 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
 
-            Product product = ProductDM.FindById(productId);            
+            using (var context = new StoreContext())
+            {
+                var Product = context.Products.Single(x => x.Id == productId);
 
-            Console.WriteLine($"Id: {product.Id}");
-            Console.WriteLine($"Name: {product.Name}");
-            Console.WriteLine($"Price: {product.Price}");
-            Console.WriteLine($"Category: {product.Category}");
-            Console.WriteLine($"Description:\r\n{product.Description}");
+                Console.WriteLine($"Id: {Product.Id}");
+                Console.WriteLine($"Name: {Product.Name}");
+                Console.WriteLine($"Price: {Product.Price}");
+                Console.WriteLine($"Category: {Product.Category}");
+                Console.WriteLine($"Description:\r\n{Product.Description}");
+
+                //var result = context.SaveChanges();
+                //if (result == 1)
+                //    Console.WriteLine($"Product added, Id: {product.Id} .");
+                //else
+                //    Console.WriteLine("Product not added.");
+            }
+
+            //Product product = ProductDM.FindById(productId);
         }
 
         public void deleteProduct()
