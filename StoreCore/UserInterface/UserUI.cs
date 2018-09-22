@@ -52,6 +52,46 @@ namespace StoreCore.UserInterface
             //bool result = UserDM.Register(user);
         }
 
+        public void RegisterAdministrator()
+        {
+            while (true)
+            {
+                Console.WriteLine("This store needs an administrator, please provide your details.");
+                Console.WriteLine("Please provide first name.");
+                String firstName = Console.ReadLine();
+                Console.WriteLine("Please provide last name.");
+                String lastName = Console.ReadLine();
+                Console.WriteLine("Please provide email.");
+                String email = Console.ReadLine();
+                Console.WriteLine("Please provide username.");
+                String username = Console.ReadLine();
+                Console.WriteLine("Please provide password.");
+                String password = Console.ReadLine();
+                Console.WriteLine("Please provide user gender.");
+                String gender = Console.ReadLine();
+                Console.WriteLine("Please provide user age.");
+                int age;
+                int.TryParse(Console.ReadLine(), out age);
+                
+                User2 user = new User2(firstName, lastName, gender, age, username, "admin", email);
+                user.HashPassword(password);
+
+                using (var context = new StoreContext())
+                {
+                    context.Users.Add(user);
+                    var result = context.SaveChanges();
+                    if (result == 1)
+                    {
+                        Console.WriteLine($"Administrator added, ID: {user.Id}.\r\n");
+                        break;
+                    }
+                    else
+                        Console.WriteLine("Administrator not added.\r\n");
+                }
+            }
+            //bool result = UserDM.Register(user);
+        }
+
         public void Login()
         {
             Console.WriteLine("Please provide username.");
@@ -61,12 +101,18 @@ namespace StoreCore.UserInterface
 
             using (var context = new StoreContext())
             {
-                var user = context.Users.Single(x => x.Username == username);
-                var result = user.ValidatePassword(password);
+                var User = context.Users.SingleOrDefault(x => x.Username == username);
+                if(User==null)
+                {
+                    Console.WriteLine("Error: credentials incorrect.");
+                    return;
+                }
+
+                var result = User.ValidatePassword(password);
 
                 if (result)
                 {
-                    UserFactory.SetCurrentUser2(user);
+                    UserFactory.SetCurrentUser2(User);
                     Console.WriteLine("Logged in.");
                 }
                 else

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using StoreCore.Factory;
 
@@ -27,7 +28,9 @@ namespace StoreCore.UserInterface
         }
 
         public void Start()
-        {
+        {   
+            CreateAdminIfNotExists();
+
             Console.WriteLine("Welcome to our store!\r\nHow can we help you?");
             Console.WriteLine("To display a list of all available commands type: help");
 
@@ -45,6 +48,19 @@ namespace StoreCore.UserInterface
                 }
                 else
                     Console.WriteLine("Error: Incorrect command. Type 'help' for a list of commands. Type 'exit' to exit the program.");
+            }
+        }
+
+        public void CreateAdminIfNotExists()
+        {
+            using (var context = new StoreContext())
+            {
+                var Admin = context.Users.SingleOrDefault(x => x.Type == "admin");
+                if (Admin == null)
+                {
+                    UserUI UserUI = new UserUI();
+                    UserUI.RegisterAdministrator();
+                }
             }
         }
 
