@@ -38,7 +38,8 @@ namespace StoreCore.UserInterface
         public void ViewOrder()
         {
             Console.WriteLine("Please provide order id.");
-            int Id = int.Parse(Console.ReadLine());
+            int Id;
+            int.TryParse(Console.ReadLine(), out Id);
 
             Order order = OrderDM.FindById(Id);
 

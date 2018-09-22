@@ -33,7 +33,8 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide user gender.");
             String gender = Console.ReadLine();
             Console.WriteLine("Please provide user age.");
-            int age = int.Parse(Console.ReadLine());
+            int age;
+            int.TryParse(Console.ReadLine(), out age);
 
             User2 user = new User2(firstName, lastName, gender, age, username, "client", email);
             //User user = new User(firstName, lastName, gender, age, username, "client", email);
@@ -189,7 +190,8 @@ namespace StoreCore.UserInterface
         public void ViewOrder()
         {
             Console.WriteLine("Please provide order id.");
-            int Id = int.Parse(Console.ReadLine());
+            int Id;
+            int.TryParse(Console.ReadLine(), out Id);
 
             Order order = OrderDM.FindById(Id);
 

@@ -40,7 +40,8 @@ namespace StoreCore.UserInterface
         public void showProduct()
         {
             Console.WriteLine("Please provide product id.");
-            int productId = int.Parse(Console.ReadLine());
+            int productId;
+            int.TryParse(Console.ReadLine(), out productId);
 
             using (var context = new StoreContext())
             {
@@ -57,7 +58,8 @@ namespace StoreCore.UserInterface
         public void deleteProduct()
         {
             Console.WriteLine("Please provide product id.");
-            int productId = int.Parse(Console.ReadLine());
+            int productId;
+            int.TryParse(Console.ReadLine(), out productId);
 
             using (var context = new StoreContext())
             {
@@ -78,7 +80,8 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide product description.");
             String productDescription = Console.ReadLine();
             Console.WriteLine("Please provide product price.");
-            decimal productPrice = Decimal.Parse(Console.ReadLine());
+            decimal productPrice;
+            Decimal.TryParse(Console.ReadLine(), out productPrice);
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
@@ -98,7 +101,8 @@ namespace StoreCore.UserInterface
         public void editProduct()
         {
             Console.WriteLine("Please provide product Id.");
-            int productId = int.Parse(Console.ReadLine());
+            int productId;
+            int.TryParse(Console.ReadLine(), productId);
 
             using (var context = new StoreContext())
             {
@@ -145,7 +149,9 @@ namespace StoreCore.UserInterface
                             Console.WriteLine(Product.Price);
                             Console.WriteLine("Specify new value:");
                             value = Console.ReadLine();
-                            Product.Price = decimal.Parse(value);
+                            decimal price;
+                            decimal.TryParse(value, out price);
+                            Product.Price = price;
                             break;
                         case "category":
                             Console.WriteLine("Old value:");

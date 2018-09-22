@@ -24,7 +24,8 @@ namespace StoreCore.UserInterface
             User user = UserFactory.GetCurrentUser();
 
             Console.WriteLine("Please provide product Id.");
-            int productId = int.Parse(Console.ReadLine());
+            int productId;
+            int.TryParse(Console.ReadLine(), out productId);
             Product product = ProductDM.FindById(productId);
             if (product.Id == 0)
             {
@@ -38,8 +39,9 @@ namespace StoreCore.UserInterface
             }
 
             Console.WriteLine("Please provide quantity.");
-            int qty = int.Parse(Console.ReadLine());
-            if(qty<=0)
+            int qty;
+            int.TryParse(Console.ReadLine(), out qty);
+            if (qty<=0)
             {
                 Console.WriteLine("Error: Quantity must be a positive number.");
                 return;
@@ -56,7 +58,8 @@ namespace StoreCore.UserInterface
         {
             User user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
-            int productId = int.Parse(Console.ReadLine());
+            int productId;
+            int.TryParse(Console.ReadLine(), out productId);
             Product product = ProductDM.FindById(productId);
             if (product.Id == 0)
             {
@@ -70,7 +73,8 @@ namespace StoreCore.UserInterface
             }
 
             Console.WriteLine("Please provide new quantity.");
-            int qty = int.Parse(Console.ReadLine());
+            int qty;
+            int.TryParse(Console.ReadLine(), out qty);
             if (qty <= 0)
             {
                 Console.WriteLine("Error: Quantity must be a positive number.");
@@ -88,7 +92,8 @@ namespace StoreCore.UserInterface
         {
             User user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
-            int productId = int.Parse(Console.ReadLine());
+            int productId;
+            int.TryParse(Console.ReadLine(), out productId);
             Product product = ProductDM.FindById(productId);
             if (product.Id == 0)
             {
