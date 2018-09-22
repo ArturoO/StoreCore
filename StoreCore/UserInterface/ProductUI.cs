@@ -21,17 +21,33 @@ namespace StoreCore.UserInterface
 
         public void ListProducts()
         {
-            List<Product> products = ProductDM.List();
-
-            Console.WriteLine("-------------------------------------------");
-            Console.WriteLine(" Id    | Name      | Price     | Category  ");
-            Console.WriteLine("-------------------------------------------");
-            foreach (var product in products)
+            using(var context = new StoreContext())
             {
-                Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}",
-                product.Id, product.Name, product.Price, product.Category));
+                var Products = context.Products.ToList();
+
                 Console.WriteLine("-------------------------------------------");
+                Console.WriteLine(" Id    | Name      | Price     | Category  ");
+                Console.WriteLine("-------------------------------------------");
+                foreach (var Product in Products)
+                {
+                    Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}",
+                        Product.Id, Product.Name, Product.Price, Product.Category));
+                    Console.WriteLine("-------------------------------------------");
+                }
+
             }
+
+            //List<Product> products = ProductDM.List();
+
+            //Console.WriteLine("-------------------------------------------");
+            //Console.WriteLine(" Id    | Name      | Price     | Category  ");
+            //Console.WriteLine("-------------------------------------------");
+            //foreach (var product in products)
+            //{
+            //    Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}",
+            //    product.Id, product.Name, product.Price, product.Category));
+            //    Console.WriteLine("-------------------------------------------");
+            //}
         }
 
         public void showProduct()
