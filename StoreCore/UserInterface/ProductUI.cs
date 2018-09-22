@@ -102,7 +102,7 @@ namespace StoreCore.UserInterface
         {
             Console.WriteLine("Please provide product Id.");
             int productId;
-            int.TryParse(Console.ReadLine(), productId);
+            int.TryParse(Console.ReadLine(), out productId);
 
             using (var context = new StoreContext())
             {
