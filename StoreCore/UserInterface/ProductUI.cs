@@ -34,20 +34,7 @@ namespace StoreCore.UserInterface
                         Product.Id, Product.Name, Product.Price, Product.Category));
                     Console.WriteLine("-------------------------------------------");
                 }
-
             }
-
-            //List<Product> products = ProductDM.List();
-
-            //Console.WriteLine("-------------------------------------------");
-            //Console.WriteLine(" Id    | Name      | Price     | Category  ");
-            //Console.WriteLine("-------------------------------------------");
-            //foreach (var product in products)
-            //{
-            //    Console.WriteLine(String.Format(" {0,-6}| {1,-10}| {2,-10}| {3,-10}",
-            //    product.Id, product.Name, product.Price, product.Category));
-            //    Console.WriteLine("-------------------------------------------");
-            //}
         }
 
         public void showProduct()
@@ -64,15 +51,7 @@ namespace StoreCore.UserInterface
                 Console.WriteLine($"Price: {Product.Price}");
                 Console.WriteLine($"Category: {Product.Category}");
                 Console.WriteLine($"Description:\r\n{Product.Description}");
-
-                //var result = context.SaveChanges();
-                //if (result == 1)
-                //    Console.WriteLine($"Product added, Id: {product.Id} .");
-                //else
-                //    Console.WriteLine("Product not added.");
             }
-
-            //Product product = ProductDM.FindById(productId);
         }
 
         public void deleteProduct()
@@ -90,12 +69,6 @@ namespace StoreCore.UserInterface
                 else
                     Console.WriteLine("Product not deleted.");
             }
-
-            //bool result = ProductDM.Delete(productId);
-            //if (result)
-            //    Console.WriteLine("Product deleted.");
-            //else
-            //    Console.WriteLine("Product not deleted.");
         }
 
         public void addProduct()
@@ -120,14 +93,6 @@ namespace StoreCore.UserInterface
                 else
                     Console.WriteLine("Product not added.");
             }
-
-            //bool result = ProductDM.Create(product);
-
-            //if (result)
-            //    Console.WriteLine($"Product added, Id: {product.Id} .");
-            //else
-            //    Console.WriteLine("Product not added.");
-
         }
 
         public void editProduct()
@@ -159,7 +124,6 @@ namespace StoreCore.UserInterface
                     if (input == "cancel")
                         return;
 
-                    //if (Array.con(productFields, input);
                     switch (input)
                     {
                         case "name":
@@ -195,8 +159,6 @@ namespace StoreCore.UserInterface
                             break;
                     }
                 }
-
-                //var result = ProductDM.Update(product);
 
                 var result = context.SaveChanges();
 
