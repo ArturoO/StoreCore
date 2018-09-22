@@ -7,7 +7,7 @@ namespace StoreCore
 {
     class StoreContext : DbContext
     {
-        public DbSet<User2> Users { get; set; }        
+        public DbSet<User2> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
