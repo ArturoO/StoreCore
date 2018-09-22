@@ -68,11 +68,23 @@ namespace StoreCore.UserInterface
         {
             Console.WriteLine("Please provide product id.");
             int productId = int.Parse(Console.ReadLine());
-            bool result = ProductDM.Delete(productId);
-            if (result)
-                Console.WriteLine("Product deleted.");
-            else
-                Console.WriteLine("Product not deleted.");
+
+            using (var context = new StoreContext())
+            {
+                var Product = context.Products.Single(x => x.Id == productId);
+                context.Products.Remove(Product);
+                var result = context.SaveChanges();
+                if (result == 1)
+                    Console.WriteLine("Product deleted.");
+                else
+                    Console.WriteLine("Product not deleted.");
+            }
+
+            //bool result = ProductDM.Delete(productId);
+            //if (result)
+            //    Console.WriteLine("Product deleted.");
+            //else
+            //    Console.WriteLine("Product not deleted.");
         }
 
         public void addProduct()
