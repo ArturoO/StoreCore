@@ -126,27 +126,40 @@ namespace StoreCore.UserInterface
 
         public void Remove()
         {
-            User user = UserFactory.GetCurrentUser();
+            var user = UserFactory.GetCurrentUser2();
             Console.WriteLine("Please provide product Id.");
             int productId;
             int.TryParse(Console.ReadLine(), out productId);
-            Product product = ProductDM.FindById(productId);
-            if (product.Id == 0)
-            {
-                Console.WriteLine("Error: Product doesn't exists.");
-                return;
-            }
-            if (!user.Cart.ProductExists(productId))
-            {
-                Console.WriteLine("Error: You can't remove product that wasn't added to cart.");
-                return;
-            }
 
-            bool result = user.Cart.RemoveProduct(product);
-            if (result)
-                Console.WriteLine("Product removed from cart.");
-            else
-                Console.WriteLine("Error: Couldn't remove product from cart.");
+            using (var context = new StoreContext())
+            {
+                var Product = context.Products
+                    .SingleOrDefault(x => x.Id == productId);
+                if (Product == null)
+                {
+                    Console.WriteLine("Error: Product doesn't exists.");
+                    return;
+                }
+                var CartProduct = user.Cart
+                    .Products
+                    .SingleOrDefault(x => x.ProductId == productId);
+                if (CartProduct == null)
+                {
+                    Console.WriteLine("Error: You must first add product to cart.");
+                    return;
+                }
+
+                user.Cart.Products.Remove(CartProduct);
+                user.Cart.UpdateSummary();
+                context.Users.Update(user);
+
+                var result = context.SaveChanges();
+                if (result>0)
+                    Console.WriteLine("Product removed from cart.");
+                else
+                    Console.WriteLine("Error: Couldn't remove product from cart.");
+            }
+            
         }
 
         public void View()
