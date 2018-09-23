@@ -115,22 +115,24 @@ namespace StoreCore.UserInterface
 
         public void View()
         {
-            User user = UserFactory.GetCurrentUser();
-            List<CartProduct> cartProducts = user.Cart.Products;
+            var User = UserFactory.GetCurrentUser2();
+            var Cart = User.Cart;
 
             Console.WriteLine("-----------------------------------------------------------");
             Console.WriteLine(" Id        | Name      | Price     | Category  | Quantity  ");
             Console.WriteLine("-----------------------------------------------------------");
 
-            foreach (var cartProduct in cartProducts)
+            if(Cart.Products!=null)
             {
-                Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}",
-                   cartProduct.Product.Id, cartProduct.Product.Name, cartProduct.Product.Price, cartProduct.Product.Category, cartProduct.Qty));
-                Console.WriteLine("-----------------------------------------------------------");
+                foreach (var cartProduct in Cart.Products)
+                {
+                    Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}",
+                       cartProduct.Product.Id, cartProduct.Product.Name, cartProduct.Product.Price, cartProduct.Product.Category, cartProduct.Qty));
+                    Console.WriteLine("-----------------------------------------------------------");
+                }
             }
-
-            Console.WriteLine(String.Format(" Items: {0,49}", user.Cart.Qty));
-            Console.WriteLine(String.Format(" Total: {0,49}", user.Cart.Price));
+            Console.WriteLine(String.Format(" Items: {0,49}", Cart.Qty));
+            Console.WriteLine(String.Format(" Total: {0,49}", Cart.Price));
             Console.WriteLine("-----------------------------------------------------------");
         }
 
