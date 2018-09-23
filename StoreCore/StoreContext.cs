@@ -9,6 +9,10 @@ namespace StoreCore
     {
         public DbSet<User2> Users { get; set; }
         public DbSet<Product2> Products { get; set; }
+        public DbSet<Order2> Orders { get; set; }
+        public DbSet<OrderProduct2> OrderProducts { get; set; }
+        public DbSet<Cart2> Carts { get; set; }
+        public DbSet<CartProduct2> CartProducts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
