@@ -4,6 +4,7 @@ using System.Text;
 using StoreCore.Factory;
 using StoreCore.DataMapper;
 using StoreCore.Entity;
+using System.Linq;
 
 namespace StoreCore.UserInterface
 {
@@ -21,37 +22,56 @@ namespace StoreCore.UserInterface
 
         public void Add()
         {
-            User user = UserFactory.GetCurrentUser();
+            var user = UserFactory.GetCurrentUser2();
 
             Console.WriteLine("Please provide product Id.");
             int productId;
             int.TryParse(Console.ReadLine(), out productId);
-            Product product = ProductDM.FindById(productId);
-            if (product.Id == 0)
+
+            using (var context = new StoreContext())
             {
-                Console.WriteLine("Error: Product doesn't exists.");
-                return;
-            }
-            if (user.Cart.ProductExists(productId))
-            {
-                Console.WriteLine("Error: Product already exists in cart. Use 'cart-update' to change the quantity.");
-                return;
+                var Product = context.Products.SingleOrDefault(x => x.Id==productId);
+                if(Product==null)
+                {
+                    Console.WriteLine("Error: Product doesn't exists.");
+                    return;
+                }
+                var CartProduct = user.Cart
+                    .Products
+                    .SingleOrDefault(x => x.ProductId == productId);
+                if (CartProduct!=null)
+                {
+                    Console.WriteLine("Error: Product already exists in cart. Use 'cart-update' to change the quantity.");
+                    return;
+                }
+
+                Console.WriteLine("Please provide quantity.");
+                int qty;
+                int.TryParse(Console.ReadLine(), out qty);
+                if (qty <= 0)
+                {
+                    Console.WriteLine("Error: Quantity must be a positive number.");
+                    return;
+                }
+
+                var NewCartProduct = new CartProduct2(user.Cart.Id, Product.Id, qty);
+                context.CartProducts.Add(NewCartProduct);
+                var result = context.SaveChanges();
+
+                if (result==1)
+                {
+                    //update summary
+                    user.Cart.Products.Add(NewCartProduct);
+                    user.Cart.UpdateSummary();
+                    context.SaveChanges();
+
+                    Console.WriteLine("Product added to cart.");
+                }   
+                else
+                    Console.WriteLine("Error: Couldn't add product to cart.");
+
             }
 
-            Console.WriteLine("Please provide quantity.");
-            int qty;
-            int.TryParse(Console.ReadLine(), out qty);
-            if (qty<=0)
-            {
-                Console.WriteLine("Error: Quantity must be a positive number.");
-                return;
-            }
-
-            bool result = user.Cart.AddProduct(product, qty);
-            if (result)
-                Console.WriteLine("Product added to cart.");
-            else
-                Console.WriteLine("Error: Couldn't add product to cart.");
         }
 
         public void Update()
