@@ -63,6 +63,7 @@ namespace StoreCore.UserInterface
                     //update summary
                     user.Cart.Products.Add(NewCartProduct);
                     user.Cart.UpdateSummary();
+                    context.Users.Update(user);
                     context.SaveChanges();
 
                     Console.WriteLine("Product added to cart.");

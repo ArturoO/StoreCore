@@ -115,7 +115,10 @@ namespace StoreCore.UserInterface
             {
                 var User = context.Users
                     .Include(x => x.Cart)
+                    .ThenInclude(c => c.Products)
+                    .ThenInclude(p => p.Product)
                     .SingleOrDefault(x => x.Username == username);
+
                 if(User==null)
                 {
                     Console.WriteLine("Error: credentials incorrect.");
