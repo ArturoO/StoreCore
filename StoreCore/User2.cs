@@ -17,6 +17,7 @@ namespace StoreCore
         public string Password { get; set; }
         public string Type { get; set; }
         public string Email { get; set; }
+        public Cart2 Cart { get; set; }
 
         public User2()
         {

@@ -5,6 +5,7 @@ using System.Linq;
 using StoreCore.DataMapper;
 using StoreCore.Entity;
 using StoreCore.Factory;
+using Microsoft.EntityFrameworkCore;
 
 namespace StoreCore.UserInterface
 {
@@ -45,7 +46,13 @@ namespace StoreCore.UserInterface
                 context.Users.Add(user);
                 var result = context.SaveChanges();
                 if (result==1)
+                {
+                    var Cart = new Cart2(user);
+                    context.Carts.Add(Cart);
+                    context.SaveChanges();
+                    
                     Console.WriteLine($"User added, ID: {user.Id}.");
+                }   
                 else
                     Console.WriteLine("User not added.");
             }
@@ -83,11 +90,15 @@ namespace StoreCore.UserInterface
                     var result = context.SaveChanges();
                     if (result == 1)
                     {
+                        var Cart = new Cart2(user);
+                        context.Carts.Add(Cart);
+                        context.SaveChanges();
+
                         Console.WriteLine($"Administrator added, ID: {user.Id}.\r\n");
-                        break;
                     }
                     else
                         Console.WriteLine("Administrator not added.\r\n");
+
                 }
             }
             //bool result = UserDM.Register(user);
@@ -102,7 +113,9 @@ namespace StoreCore.UserInterface
 
             using (var context = new StoreContext())
             {
-                var User = context.Users.SingleOrDefault(x => x.Username == username);
+                var User = context.Users
+                    .Include(x => x.Cart)
+                    .SingleOrDefault(x => x.Username == username);
                 if(User==null)
                 {
                     Console.WriteLine("Error: credentials incorrect.");
@@ -126,7 +139,6 @@ namespace StoreCore.UserInterface
         {
             UserFactory.SetCurrentUserAsGuest();
             UserFactory.SetCurrentUserAsGuest2();
-            //UserFactory.SetCurrentUser(null);
             Console.WriteLine("You were logged out.");
         }
 
