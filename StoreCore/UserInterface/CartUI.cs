@@ -53,24 +53,17 @@ namespace StoreCore.UserInterface
                     Console.WriteLine("Error: Quantity must be a positive number.");
                     return;
                 }
-
-                var NewCartProduct = new CartProduct2(user.Cart.Id, Product.Id, qty);
-                context.CartProducts.Add(NewCartProduct);
+                
+                var NewCartProduct = new CartProduct2(user.Cart, Product, qty);
+                user.Cart.Products.Add(NewCartProduct);
+                user.Cart.UpdateSummary();
+                context.Users.Update(user);
                 var result = context.SaveChanges();
 
-                if (result==1)
-                {
-                    //update summary
-                    user.Cart.Products.Add(NewCartProduct);
-                    user.Cart.UpdateSummary();
-                    context.Users.Update(user);
-                    context.SaveChanges();
-
+                if (result>0)
                     Console.WriteLine("Product added to cart.");
-                }   
                 else
                     Console.WriteLine("Error: Couldn't add product to cart.");
-
             }
 
         }
@@ -110,8 +103,6 @@ namespace StoreCore.UserInterface
                 }
 
                 CartProduct.Qty = qty;
-                context.CartProducts.Update(CartProduct);
-                
                 user.Cart.UpdateSummary();
                 context.Users.Update(user);
                 var result = context.SaveChanges();
