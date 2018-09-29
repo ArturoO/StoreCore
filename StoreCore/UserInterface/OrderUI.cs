@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using StoreCore.DataMapper;
 using StoreCore.Entity;
 using StoreCore.Factory;
@@ -45,24 +46,36 @@ namespace StoreCore.UserInterface
             int Id;
             int.TryParse(Console.ReadLine(), out Id);
 
-            Order order = OrderDM.FindById(Id);
-
-            Console.WriteLine("-----------------------------------------------");
-            Console.WriteLine(" Name      | Price     | Category  | Quantity  ");
-            Console.WriteLine("-----------------------------------------------");
-
-            foreach (var product in order.Products)
+            using (var context = new StoreContext())
             {
-                Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}",
-                   product.Name, product.Price, product.Category, product.Qty));
+                var order = context.Orders
+                    .Include(x => x.Products)
+                    .SingleOrDefault(x => x.Id == Id);
+
+                if (order == null)
+                {
+                    Console.WriteLine("Error: Order doesn't exists.");
+                    return;
+                }
+
+                Console.WriteLine("-----------------------------------------------");
+                Console.WriteLine(" Name      | Price     | Category  | Quantity  ");
+                Console.WriteLine("-----------------------------------------------");
+
+                foreach (var product in order.Products)
+                {
+                    Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}",
+                       product.Name, product.Price, product.Category, product.Qty));
+                    Console.WriteLine("-----------------------------------------------");
+                }
+
+                Console.WriteLine(String.Format(" Date: {0,40}", order.DateTime));
+                Console.WriteLine(String.Format(" Status: {0,38}", order.Status));
+                Console.WriteLine(String.Format(" Items: {0,39}", order.Qty));
+                Console.WriteLine(String.Format(" Total: {0,39}", order.Total));
                 Console.WriteLine("-----------------------------------------------");
             }
 
-            Console.WriteLine(String.Format(" Date: {0,40}", order.DateTime));
-            Console.WriteLine(String.Format(" Status: {0,38}", order.Status));
-            Console.WriteLine(String.Format(" Items: {0,39}", order.Qty));
-            Console.WriteLine(String.Format(" Total: {0,39}", order.Total));
-            Console.WriteLine("-----------------------------------------------");
         }
 
 
