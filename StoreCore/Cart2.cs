@@ -38,5 +38,41 @@ namespace StoreCore
             }            
         }
 
+        public int Checkout()
+        {
+            var order = new Order2();
+            order.UserId = UserId;
+            order.Qty = Qty;
+            order.Total = Price;
+            order.DateTime = DateTime.Now;            
+            order.Status = "new";
+            foreach (var cartProduct in Products)
+            {
+                var orderProduct = new OrderProduct2(cartProduct);
+                order.Products.Add(orderProduct);
+            }
+
+            using (var context = new StoreContext())
+            {
+                context.Orders.Add(order);
+                context.SaveChanges();
+            }
+            Clear();
+            return order.Id;
+        }
+
+        public void Clear()
+        {
+            using (var context = new StoreContext())
+            {
+                foreach(var cartProduct in Products)
+                    context.CartProducts.Remove(cartProduct);
+                Products.Clear();
+                UpdateSummary();
+                context.Carts.Update(this);
+                context.SaveChanges();
+            }
+        }
+
     }
 }

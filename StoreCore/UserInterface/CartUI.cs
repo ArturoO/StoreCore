@@ -178,7 +178,7 @@ namespace StoreCore.UserInterface
 
         public void Checkout()
         {
-            User user = UserFactory.GetCurrentUser();
+            var user = UserFactory.GetCurrentUser2();
 
             Console.WriteLine("You're about to make a new order.");
             Console.WriteLine($"Currently you have {user.Cart.Qty} products in your cart, total price is: {user.Cart.Price}.");
@@ -187,8 +187,8 @@ namespace StoreCore.UserInterface
             string input = Console.ReadLine();
             if (input == "yes")
             {
-                user.Cart.Checkout();
-                Console.WriteLine("Order has been made.");
+                var orderId = user.Cart.Checkout();
+                Console.WriteLine($"Order ID:{orderId} has been made.");
             }
             else
             {
