@@ -191,18 +191,20 @@ namespace StoreCore.UserInterface
 
         public void ListUsers()
         {
-            //List<User> users = UserDM.List();
+            using (var context = new StoreContext())
+            {
+                var Users = context.Users.ToList();
+                Console.WriteLine("------------------------------------------------------------------------------------------------------");
+                Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
+                Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
-            //Console.WriteLine("------------------------------------------------------------------------------------------------------");
-            //Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
-            //Console.WriteLine("------------------------------------------------------------------------------------------------------");
-
-            //foreach (var user in users)
-            //{
-            //    Console.WriteLine(String.Format(" {0,-5}| {1,-11}| {2,-11}| {3,-11}| {4,-25}| {5,-11}| {6,-4}| {7,-9}",
-            //      user.Id, user.Username, user.FirstName, user.LastName, user.Email, user.Gender, user.Age, user.Type));
-            //    Console.WriteLine("------------------------------------------------------------------------------------------------------");
-            //}
+                foreach (var User in Users)
+                {
+                    Console.WriteLine(String.Format(" {0,-5}| {1,-11}| {2,-11}| {3,-11}| {4,-25}| {5,-11}| {6,-4}| {7,-9}",
+                      User.Id, User.Username, User.FirstName, User.LastName, User.Email, User.Gender, User.Age, User.Type));
+                    Console.WriteLine("------------------------------------------------------------------------------------------------------");
+                }
+            }
         }
 
     }
