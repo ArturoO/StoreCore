@@ -28,9 +28,24 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide email.");
             String email = Console.ReadLine();
             Console.WriteLine("Please provide username.");
-            String username = Console.ReadLine();            
+            String username = Console.ReadLine();         
+            
             Console.WriteLine("Please provide password.");
-            String password = Console.ReadLine();
+            StringBuilder passwordBuilder = new StringBuilder("");
+            while (true)
+            {
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                    break;
+                }
+                passwordBuilder.Append(key.KeyChar);
+                Console.Write("\b*");
+            }
+            string password = passwordBuilder.ToString();
+
+            //String password = Console.ReadLine();
             Console.WriteLine("Please provide user gender.");
             String gender = Console.ReadLine();
             Console.WriteLine("Please provide user age.");
@@ -109,7 +124,19 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide username.");
             String username = Console.ReadLine();
             Console.WriteLine("Please provide password.");
-            String password = Console.ReadLine();
+            StringBuilder passwordBuilder = new StringBuilder("");
+            while (true)
+            {
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                    break;
+                }
+                passwordBuilder.Append(key.KeyChar);
+                Console.Write("\b*");
+            }
+            string password = passwordBuilder.ToString();
 
             using (var context = new StoreContext())
             {
