@@ -18,6 +18,7 @@ namespace StoreCore
         public string Type { get; set; }
         public string Email { get; set; }
         public Cart2 Cart { get; set; }
+        public ICollection<Order2> Orders { get; set; }
 
         public User2()
         {

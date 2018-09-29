@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using StoreCore.DataMapper;
 using StoreCore.Entity;
@@ -18,21 +19,24 @@ namespace StoreCore.UserInterface
         
         public void ListOrders()
         {
-            User user = UserFactory.GetCurrentUser();
+            var user = UserFactory.GetCurrentUser2();
 
-            List<Order> orders = OrderDM.ListByUser(user);
-
-            Console.WriteLine("---------------------------------------------------------------------");
-            Console.WriteLine(" Id        | Date                | Status    | Quantity  | Total     ");
-            Console.WriteLine("---------------------------------------------------------------------");
-
-            foreach (var order in orders)
+            using (var context = new StoreContext())
             {
-                Console.WriteLine(String.Format(" {0,-10}| {1,-20}| {2,-10}| {3,-10}| {4,-10}",
-                   order.Id,order.DateTime,order.Status,order.Qty, order.Total));
+                user.Orders = context.Orders
+                    .Where(x=> x.UserId==user.Id)
+                    .ToList();
                 Console.WriteLine("---------------------------------------------------------------------");
-            }
+                Console.WriteLine(" Id        | Date                | Status    | Quantity  | Total     ");
+                Console.WriteLine("---------------------------------------------------------------------");
 
+                foreach (var order in user.Orders)
+                {
+                    Console.WriteLine(String.Format(" {0,-10}| {1,-20}| {2,-10}| {3,-10}| {4,-10}",
+                       order.Id, order.DateTime, order.Status, order.Qty, order.Total));
+                    Console.WriteLine("---------------------------------------------------------------------");
+                }
+            }
         }
 
         public void ViewOrder()
