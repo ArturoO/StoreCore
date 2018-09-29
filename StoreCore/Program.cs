@@ -28,7 +28,6 @@ namespace StoreCore
 
             //Set guest as a current user
             UserFactory.SetCurrentUserAsGuest();
-            UserFactory.SetCurrentUserAsGuest2();
         }
 
     }

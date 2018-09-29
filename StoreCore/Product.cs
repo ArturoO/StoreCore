@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StoreCore
 {
-    class Product2
+    class Product
     {
         decimal price = 0;
 
@@ -14,7 +14,7 @@ namespace StoreCore
         public decimal Price { get { return price; } set { if (value >= 0) price = value; } }
         public string Category { get; set; }
 
-        public Product2(string name, string description, decimal price, string category)
+        public Product(string name, string description, decimal price, string category)
         {
             Name = name;
             Description = description;
@@ -22,7 +22,7 @@ namespace StoreCore
             Category = category;
         }
 
-        public Product2(int id, string name, string description, decimal price, string category)
+        public Product(int id, string name, string description, decimal price, string category)
         {
             Id = id;
             Name = name;

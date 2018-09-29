@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using StoreCore.DataMapper;
-using StoreCore.Entity;
 using StoreCore.Factory;
 
 namespace StoreCore.UserInterface
@@ -17,10 +15,9 @@ namespace StoreCore.UserInterface
             commandsMap.Add("view-order", new CommandInfo(new string[] { "client", "admin" }, ViewOrder));
         }
 
-        
         public void ListOrders()
         {
-            var user = UserFactory.GetCurrentUser2();
+            var user = UserFactory.GetCurrentUser();
 
             using (var context = new StoreContext())
             {

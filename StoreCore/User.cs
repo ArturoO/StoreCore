@@ -6,7 +6,7 @@ using System.Text;
 namespace StoreCore
 {
     
-    class User2
+    class User
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -17,15 +17,15 @@ namespace StoreCore
         public string Password { get; set; }
         public string Type { get; set; }
         public string Email { get; set; }
-        public Cart2 Cart { get; set; }
-        public ICollection<Order2> Orders { get; set; }
+        public Cart Cart { get; set; }
+        public ICollection<Order> Orders { get; set; }
 
-        public User2()
+        public User()
         {
 
         }
 
-        public User2(string firstName, string lastName, string gender, int age, string username, string type, string email)
+        public User(string firstName, string lastName, string gender, int age, string username, string type, string email)
         {
             FirstName = firstName;
             LastName = lastName;

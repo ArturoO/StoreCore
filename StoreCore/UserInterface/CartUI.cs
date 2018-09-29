@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using StoreCore.Factory;
-using StoreCore.DataMapper;
-using StoreCore.Entity;
 using System.Linq;
 
 namespace StoreCore.UserInterface
@@ -22,7 +20,7 @@ namespace StoreCore.UserInterface
 
         public void Add()
         {
-            var user = UserFactory.GetCurrentUser2();
+            var user = UserFactory.GetCurrentUser();
 
             Console.WriteLine("Please provide product Id.");
             int productId;
@@ -54,7 +52,7 @@ namespace StoreCore.UserInterface
                     return;
                 }
                 
-                var NewCartProduct = new CartProduct2(user.Cart, Product, qty);
+                var NewCartProduct = new CartProduct(user.Cart, Product, qty);
                 user.Cart.Products.Add(NewCartProduct);
                 user.Cart.UpdateSummary();
                 context.Users.Update(user);
@@ -70,7 +68,7 @@ namespace StoreCore.UserInterface
 
         public void Update()
         {
-            var user = UserFactory.GetCurrentUser2();
+            var user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
             int productId;
             int.TryParse(Console.ReadLine(), out productId);
@@ -117,7 +115,7 @@ namespace StoreCore.UserInterface
 
         public void Remove()
         {
-            var user = UserFactory.GetCurrentUser2();
+            var user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
             int productId;
             int.TryParse(Console.ReadLine(), out productId);
@@ -155,7 +153,7 @@ namespace StoreCore.UserInterface
 
         public void View()
         {
-            var User = UserFactory.GetCurrentUser2();
+            var User = UserFactory.GetCurrentUser();
             var Cart = User.Cart;
 
             Console.WriteLine("-----------------------------------------------------------");
@@ -178,7 +176,7 @@ namespace StoreCore.UserInterface
 
         public void Checkout()
         {
-            var user = UserFactory.GetCurrentUser2();
+            var user = UserFactory.GetCurrentUser();
 
             Console.WriteLine("You're about to make a new order.");
             Console.WriteLine($"Currently you have {user.Cart.Qty} products in your cart, total price is: {user.Cart.Price}.");

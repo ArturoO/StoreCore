@@ -66,8 +66,7 @@ namespace StoreCore.UserInterface
 
         public bool CurrentUserCan(CommandInfo commandInfo)
         {
-            //string userType = UserFactory.GetCurrentUserType();
-            string userType = UserFactory.GetCurrentUserType2();
+            string userType = UserFactory.GetCurrentUserType();
             int result = Array.IndexOf(commandInfo.users, userType);
             if (result >= 0)
                 return true;
@@ -83,8 +82,7 @@ namespace StoreCore.UserInterface
 
         public void Help()
         {            
-            //string userType = UserFactory.GetCurrentUserType();
-            string userType = UserFactory.GetCurrentUserType2();
+            string userType = UserFactory.GetCurrentUserType();
             List<string> commandsList = new List<string> { "exit" };
             foreach (var commandMap in this.commandsMap)
             {

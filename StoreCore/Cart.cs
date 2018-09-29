@@ -4,23 +4,23 @@ using System.Text;
 
 namespace StoreCore
 {
-    class Cart2
+    class Cart
     {
         public int Id { get; set; }
         public decimal Price { get; set; }
         public int Qty { get; set; }
         public int UserId { get; set; }
-        public User2 User { get; set; }
-        public ICollection<CartProduct2> Products { get; set; }
+        public User User { get; set; }
+        public ICollection<CartProduct> Products { get; set; }
 
-        public Cart2()
+        public Cart()
         {
-            Products = new List<CartProduct2>();            
+            Products = new List<CartProduct>();            
         }
 
-        public Cart2(User2 user)
+        public Cart(User user)
         {
-            Products = new List<CartProduct2>();
+            Products = new List<CartProduct>();
             Price = 0;
             Qty = 0;
             UserId = user.Id;
@@ -40,7 +40,7 @@ namespace StoreCore
 
         public int Checkout()
         {
-            var order = new Order2();
+            var order = new Order();
             order.UserId = UserId;
             order.Qty = Qty;
             order.Total = Price;
@@ -48,7 +48,7 @@ namespace StoreCore
             order.Status = "new";
             foreach (var cartProduct in Products)
             {
-                var orderProduct = new OrderProduct2(cartProduct);
+                var orderProduct = new OrderProduct(cartProduct);
                 order.Products.Add(orderProduct);
             }
 

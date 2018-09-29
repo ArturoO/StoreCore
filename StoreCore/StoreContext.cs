@@ -7,12 +7,12 @@ namespace StoreCore
 {
     class StoreContext : DbContext
     {
-        public DbSet<User2> Users { get; set; }
-        public DbSet<Product2> Products { get; set; }
-        public DbSet<Order2> Orders { get; set; }
-        public DbSet<OrderProduct2> OrderProducts { get; set; }
-        public DbSet<Cart2> Carts { get; set; }
-        public DbSet<CartProduct2> CartProducts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartProduct> CartProducts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

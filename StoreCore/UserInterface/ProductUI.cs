@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using StoreCore.DataMapper;
-using StoreCore.Entity;
 using System.Linq;
 
 namespace StoreCore.UserInterface
@@ -85,7 +83,7 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
-            Product2 product = new Product2(productName, productDescription, productPrice, productCategory);
+            Product product = new Product(productName, productDescription, productPrice, productCategory);
 
             using (var context = new StoreContext())
             {

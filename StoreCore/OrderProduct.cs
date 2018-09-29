@@ -4,23 +4,23 @@ using System.Text;
 
 namespace StoreCore
 {
-    class OrderProduct2
+    class OrderProduct
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public Order2 Order { get; set; }
+        public Order Order { get; set; }
         public int Qty { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public string Category { get; set; }
 
-        public OrderProduct2()
+        public OrderProduct()
         {
 
         }
 
-        public OrderProduct2(CartProduct2 cartProduct)
+        public OrderProduct(CartProduct cartProduct)
         {
             Name = cartProduct.Product.Name;
             Description = cartProduct.Product.Description;

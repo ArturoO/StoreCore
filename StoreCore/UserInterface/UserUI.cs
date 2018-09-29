@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using StoreCore.DataMapper;
-using StoreCore.Entity;
 using StoreCore.Factory;
 using Microsoft.EntityFrameworkCore;
 
@@ -52,7 +50,7 @@ namespace StoreCore.UserInterface
             int age;
             int.TryParse(Console.ReadLine(), out age);
 
-            User2 user = new User2(firstName, lastName, gender, age, username, "client", email);
+            User user = new User(firstName, lastName, gender, age, username, "client", email);
             //User user = new User(firstName, lastName, gender, age, username, "client", email);
             user.HashPassword(password);
 
@@ -62,7 +60,7 @@ namespace StoreCore.UserInterface
                 var result = context.SaveChanges();
                 if (result==1)
                 {
-                    var Cart = new Cart2(user);
+                    var Cart = new Cart(user);
                     context.Carts.Add(Cart);
                     context.SaveChanges();
                     
@@ -96,7 +94,7 @@ namespace StoreCore.UserInterface
                 int age;
                 int.TryParse(Console.ReadLine(), out age);
                 
-                User2 user = new User2(firstName, lastName, gender, age, username, "admin", email);
+                User user = new User(firstName, lastName, gender, age, username, "admin", email);
                 user.HashPassword(password);
 
                 using (var context = new StoreContext())
@@ -105,7 +103,7 @@ namespace StoreCore.UserInterface
                     var result = context.SaveChanges();
                     if (result == 1)
                     {
-                        var Cart = new Cart2(user);
+                        var Cart = new Cart(user);
                         context.Carts.Add(Cart);
                         context.SaveChanges();
 
@@ -156,7 +154,7 @@ namespace StoreCore.UserInterface
 
                 if (result)
                 {
-                    UserFactory.SetCurrentUser2(User);
+                    UserFactory.SetCurrentUser(User);
                     Console.WriteLine("Logged in.");
                 }
                 else
@@ -168,7 +166,6 @@ namespace StoreCore.UserInterface
         public void Logout()
         {
             UserFactory.SetCurrentUserAsGuest();
-            UserFactory.SetCurrentUserAsGuest2();
             Console.WriteLine("You were logged out.");
         }
 
@@ -194,67 +191,19 @@ namespace StoreCore.UserInterface
 
         public void ListUsers()
         {
-            List<User> users = UserDM.List();
+            //List<User> users = UserDM.List();
 
-            Console.WriteLine("------------------------------------------------------------------------------------------------------");
-            Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
-            Console.WriteLine("------------------------------------------------------------------------------------------------------");
+            //Console.WriteLine("------------------------------------------------------------------------------------------------------");
+            //Console.WriteLine(" Id   | Username   | First name | Last name  | Email                    | Gender     | Age | Type     ");
+            //Console.WriteLine("------------------------------------------------------------------------------------------------------");
 
-            foreach (var user in users)
-            {
-                Console.WriteLine(String.Format(" {0,-5}| {1,-11}| {2,-11}| {3,-11}| {4,-25}| {5,-11}| {6,-4}| {7,-9}",
-                  user.Id, user.Username, user.FirstName, user.LastName, user.Email, user.Gender, user.Age, user.Type));
-                Console.WriteLine("------------------------------------------------------------------------------------------------------");
-            }
+            //foreach (var user in users)
+            //{
+            //    Console.WriteLine(String.Format(" {0,-5}| {1,-11}| {2,-11}| {3,-11}| {4,-25}| {5,-11}| {6,-4}| {7,-9}",
+            //      user.Id, user.Username, user.FirstName, user.LastName, user.Email, user.Gender, user.Age, user.Type));
+            //    Console.WriteLine("------------------------------------------------------------------------------------------------------");
+            //}
         }
-
-        
-
-        public void ListOrders()
-        {
-            User user = UserFactory.GetCurrentUser();
-
-            List<Order> orders = OrderDM.ListByUser(user);
-
-            Console.WriteLine("---------------------------------------------------------------------");
-            Console.WriteLine(" Id        | Date                | Status    | Quantity  | Total     ");
-            Console.WriteLine("---------------------------------------------------------------------");
-
-            foreach (var order in orders)
-            {
-                Console.WriteLine(String.Format(" {0,-10}| {1,-20}| {2,-10}| {3,-10}| {4,-10}",
-                   order.Id,order.DateTime,order.Status,order.Qty, order.Total));
-                Console.WriteLine("---------------------------------------------------------------------");
-            }
-
-        }
-
-        public void ViewOrder()
-        {
-            Console.WriteLine("Please provide order id.");
-            int Id;
-            int.TryParse(Console.ReadLine(), out Id);
-
-            Order order = OrderDM.FindById(Id);
-
-            Console.WriteLine("-----------------------------------------------");
-            Console.WriteLine(" Name      | Price     | Category  | Quantity  ");
-            Console.WriteLine("-----------------------------------------------");
-
-            foreach (var product in order.Products)
-            {
-                Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}",
-                   product.Name, product.Price, product.Category, product.Qty));
-                Console.WriteLine("-----------------------------------------------");
-            }
-
-            Console.WriteLine(String.Format(" Date: {0,40}", order.DateTime));
-            Console.WriteLine(String.Format(" Status: {0,38}", order.Status));
-            Console.WriteLine(String.Format(" Items: {0,39}", order.Qty));
-            Console.WriteLine(String.Format(" Total: {0,39}", order.Total));
-            Console.WriteLine("-----------------------------------------------");
-        }
-
 
     }
 }
