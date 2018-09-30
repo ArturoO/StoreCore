@@ -21,6 +21,19 @@ namespace StoreCore.UserInterface
             return input;
         }
 
+        public static string RequiredEmailField()
+        {
+            var input = "";
+            input = Console.ReadLine();
+            
+            while(!isValidEmail(input))
+            {
+                Console.WriteLine("Field is required, please enter the value.");
+                input = Console.ReadLine();
+            }
+            return input;
+        }
+
         public static int RequiredIntField()
         {
             var input = "";
@@ -74,6 +87,19 @@ namespace StoreCore.UserInterface
                 Console.Write("\b*");
             }
             return passwordBuilder.ToString();
+        }
+
+        public static bool isValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
     }

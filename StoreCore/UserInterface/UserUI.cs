@@ -25,7 +25,7 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide user last name.");
             String lastName = Console.ReadLine();
             Console.WriteLine("Please provide email.");
-            string email = RequiredTextField();
+            string email = RequiredEmailField();
             Console.WriteLine("Please provide username.");
             String username = RequiredTextField();
             Console.WriteLine("Please provide password.");
