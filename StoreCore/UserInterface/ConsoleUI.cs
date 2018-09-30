@@ -70,22 +70,28 @@ namespace StoreCore.UserInterface
             while (true)
             {
                 var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
+
+                if(key.Key==ConsoleKey.Backspace)
                 {
+                    if (passwordBuilder.Length > 0)
+                    {
+                        passwordBuilder.Length--;
+                        Console.Write(" \b");
+                    }
+                } else if (key.Key==ConsoleKey.Enter) {
                     if (passwordBuilder.Length == 0)
                     {
                         Console.WriteLine("Field is required, please enter the value.");
-                        continue;
-                    }
-                    else
-                    {
+                    } else {
                         Console.WriteLine();
                         break;
-                    }                    
-                }
-                passwordBuilder.Append(key.KeyChar);
-                Console.Write("\b*");
+                    }
+                } else {
+                    passwordBuilder.Append(key.KeyChar);
+                    Console.Write("\b*");
+                }                
             }
+
             return passwordBuilder.ToString();
         }
 
