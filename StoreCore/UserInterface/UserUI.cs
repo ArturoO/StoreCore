@@ -15,6 +15,7 @@ namespace StoreCore.UserInterface
             commandsMap.Add("register", new CommandInfo(new string[] { "guest" }, Register));
             commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
+            commandsMap.Add("show-profile", new CommandInfo(new string[] { "client", "admin" }, ShowProfile));
             commandsMap.Add("update-profile", new CommandInfo(new string[] { "client", "admin" }, UpdateProfile));
             commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));            
         }
@@ -135,6 +136,22 @@ namespace StoreCore.UserInterface
         {
             UserFactory.SetCurrentUserAsGuest();
             Console.WriteLine("You were logged out.");
+        }
+
+        public void ShowProfile()
+        {
+            using (var context = new StoreContext())
+            {
+                var User = UserFactory.GetCurrentUser();
+
+                Console.WriteLine($"Id: {User.Id}");
+                Console.WriteLine($"First name: {User.FirstName}");
+                Console.WriteLine($"Last name: {User.LastName}");
+                Console.WriteLine($"Username: {User.Username}");
+                Console.WriteLine($"E-mail: {User.Email}");
+                Console.WriteLine($"Gender: {User.Gender}");
+                Console.WriteLine($"Age: {User.Age}");
+            }
         }
 
         public void UpdateProfile()
