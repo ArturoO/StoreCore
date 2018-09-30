@@ -41,8 +41,7 @@ namespace StoreCore.UserInterface
         public void ViewOrder()
         {
             Console.WriteLine("Please provide order id.");
-            int Id;
-            int.TryParse(Console.ReadLine(), out Id);
+            int Id = RequiredIntField();
 
             using (var context = new StoreContext())
             {

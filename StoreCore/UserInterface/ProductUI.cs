@@ -39,8 +39,7 @@ namespace StoreCore.UserInterface
         public void showProduct()
         {
             Console.WriteLine("Please provide product id.");
-            int productId;
-            int.TryParse(Console.ReadLine(), out productId);
+            int productId = RequiredIntField();
 
             using (var context = new StoreContext())
             {
@@ -57,8 +56,7 @@ namespace StoreCore.UserInterface
         public void deleteProduct()
         {
             Console.WriteLine("Please provide product id.");
-            int productId;
-            int.TryParse(Console.ReadLine(), out productId);
+            int productId = RequiredIntField();
 
             using (var context = new StoreContext())
             {
@@ -133,7 +131,6 @@ namespace StoreCore.UserInterface
                             Console.WriteLine(Product.Name);
                             Console.WriteLine("Specify new value:");
                             value = RequiredTextField();
-                            //value = Console.ReadLine();
                             Product.Name = value;
                             break;
                         case "description":
@@ -147,10 +144,7 @@ namespace StoreCore.UserInterface
                             Console.WriteLine("Old value:");
                             Console.WriteLine(Product.Price);
                             Console.WriteLine("Specify new value:");
-                            //value = Console.ReadLine();
-                            decimal price;
-                            //decimal.TryParse(value, out price);
-                            price = RequiredDecimalField();
+                            decimal price = RequiredDecimalField();
                             Product.Price = price;
                             break;
                         case "category":

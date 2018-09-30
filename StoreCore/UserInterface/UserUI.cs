@@ -65,16 +65,15 @@ namespace StoreCore.UserInterface
                 Console.WriteLine("Please provide last name.");
                 String lastName = Console.ReadLine();
                 Console.WriteLine("Please provide email.");
-                String email = Console.ReadLine();
+                String email = RequiredTextField();
                 Console.WriteLine("Please provide username.");
-                String username = Console.ReadLine();
+                String username = RequiredTextField();
                 Console.WriteLine("Please provide password.");
-                String password = Console.ReadLine();
+                String password = RequiredPasswordField();
                 Console.WriteLine("Please provide user gender.");
                 String gender = Console.ReadLine();
                 Console.WriteLine("Please provide user age.");
-                int age;
-                int.TryParse(Console.ReadLine(), out age);
+                int age = RequiredIntField();
                 
                 User user = new User(firstName, lastName, gender, age, username, "admin", email);
                 user.HashPassword(password);
@@ -93,16 +92,14 @@ namespace StoreCore.UserInterface
                     }
                     else
                         Console.WriteLine("Administrator not added.\r\n");
-
                 }
             }
-            //bool result = UserDM.Register(user);
         }
 
         public void Login()
         {
             Console.WriteLine("Please provide username.");
-            String username = Console.ReadLine();
+            String username = RequiredTextField();
             Console.WriteLine("Please provide password.");
             string password = RequiredPasswordField();
             

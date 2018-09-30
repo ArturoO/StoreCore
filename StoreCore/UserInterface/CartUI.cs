@@ -23,8 +23,7 @@ namespace StoreCore.UserInterface
             var user = UserFactory.GetCurrentUser();
 
             Console.WriteLine("Please provide product Id.");
-            int productId;
-            int.TryParse(Console.ReadLine(), out productId);
+            int productId = RequiredIntField();
 
             using (var context = new StoreContext())
             {
@@ -44,8 +43,7 @@ namespace StoreCore.UserInterface
                 }
 
                 Console.WriteLine("Please provide quantity.");
-                int qty;
-                int.TryParse(Console.ReadLine(), out qty);
+                int qty = RequiredIntField();
                 if (qty <= 0)
                 {
                     Console.WriteLine("Error: Quantity must be a positive number.");
@@ -70,8 +68,7 @@ namespace StoreCore.UserInterface
         {
             var user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
-            int productId;
-            int.TryParse(Console.ReadLine(), out productId);
+            int productId = RequiredIntField();
 
             using (var context = new StoreContext())
             {
@@ -92,8 +89,7 @@ namespace StoreCore.UserInterface
                 }
 
                 Console.WriteLine("Please provide quantity.");
-                int qty;
-                int.TryParse(Console.ReadLine(), out qty);
+                int qty = RequiredIntField();
                 if (qty <= 0)
                 {
                     Console.WriteLine("Error: Quantity must be a positive number.");
@@ -117,8 +113,7 @@ namespace StoreCore.UserInterface
         {
             var user = UserFactory.GetCurrentUser();
             Console.WriteLine("Please provide product Id.");
-            int productId;
-            int.TryParse(Console.ReadLine(), out productId);
+            int productId = RequiredIntField();
 
             using (var context = new StoreContext())
             {
