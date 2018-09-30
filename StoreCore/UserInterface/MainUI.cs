@@ -6,14 +6,14 @@ using StoreCore.Factory;
 
 namespace StoreCore.UserInterface
 {
-    public class MainUI : IConsoleUI
+    public class MainUI : ConsoleUI
     {
-        protected Dictionary<string, IConsoleUI> consoleUIs;
+        protected Dictionary<string, ConsoleUI> consoleUIs;
         protected Dictionary<string, CommandInfo> commandsMap;
 
         public MainUI()
         {
-            consoleUIs = new Dictionary<string, IConsoleUI>();
+            consoleUIs = new Dictionary<string, ConsoleUI>();
             consoleUIs.Add("MainUI", this);
             consoleUIs.Add("UserUI", new UserUI());
             consoleUIs.Add("ProductUI", new ProductUI());
@@ -74,11 +74,10 @@ namespace StoreCore.UserInterface
                 return false;
         }
 
-        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
+        override public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
             commandsMap.Add("help", new CommandInfo(new string[] { "guest", "client", "admin" }, Help));
         }
-
 
         public void Help()
         {            

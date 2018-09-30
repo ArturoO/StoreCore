@@ -4,11 +4,6 @@ using System.Text;
 
 namespace StoreCore.UserInterface
 {
-    public interface IConsoleUI
-    {
-        void registerCommands(Dictionary<string, CommandInfo> commandsMap);
-    }
-
     public struct CommandInfo
     {
         public string[] users;
@@ -21,5 +16,4 @@ namespace StoreCore.UserInterface
             this.callable = callable;
         }
     }
-
 }

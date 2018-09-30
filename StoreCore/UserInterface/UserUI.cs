@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace StoreCore.UserInterface
 {
-    public class UserUI : IConsoleUI
+    public class UserUI : ConsoleUI
     {
-        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
+        override public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
             commandsMap.Add("register", new CommandInfo(new string[] { "guest" }, Register));
             commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
@@ -24,34 +24,17 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide user last name.");
             String lastName = Console.ReadLine();
             Console.WriteLine("Please provide email.");
-            String email = Console.ReadLine();
+            string email = RequiredTextField();
             Console.WriteLine("Please provide username.");
-            String username = Console.ReadLine();         
-            
+            String username = RequiredTextField();
             Console.WriteLine("Please provide password.");
-            StringBuilder passwordBuilder = new StringBuilder("");
-            while (true)
-            {
-                var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    Console.WriteLine();
-                    break;
-                }
-                passwordBuilder.Append(key.KeyChar);
-                Console.Write("\b*");
-            }
-            string password = passwordBuilder.ToString();
-
-            //String password = Console.ReadLine();
+            string password = RequiredPasswordField();
             Console.WriteLine("Please provide user gender.");
             String gender = Console.ReadLine();
             Console.WriteLine("Please provide user age.");
-            int age;
-            int.TryParse(Console.ReadLine(), out age);
+            int age = RequiredIntField();
 
             User user = new User(firstName, lastName, gender, age, username, "client", email);
-            //User user = new User(firstName, lastName, gender, age, username, "client", email);
             user.HashPassword(password);
 
             using (var context = new StoreContext())
@@ -69,8 +52,6 @@ namespace StoreCore.UserInterface
                 else
                     Console.WriteLine("User not added.");
             }
-
-            //bool result = UserDM.Register(user);
         }
 
         public void RegisterAdministrator()
@@ -122,20 +103,8 @@ namespace StoreCore.UserInterface
             Console.WriteLine("Please provide username.");
             String username = Console.ReadLine();
             Console.WriteLine("Please provide password.");
-            StringBuilder passwordBuilder = new StringBuilder("");
-            while (true)
-            {
-                var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    Console.WriteLine();
-                    break;
-                }
-                passwordBuilder.Append(key.KeyChar);
-                Console.Write("\b*");
-            }
-            string password = passwordBuilder.ToString();
-
+            string password = RequiredPasswordField();
+            
             using (var context = new StoreContext())
             {
                 var User = context.Users

@@ -7,9 +7,9 @@ using StoreCore.Factory;
 
 namespace StoreCore.UserInterface
 {
-    public class OrderUI : IConsoleUI
+    public class OrderUI : ConsoleUI
     {
-        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
+        override public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
             commandsMap.Add("list-orders", new CommandInfo(new string[] { "client", "admin" }, ListOrders));
             commandsMap.Add("view-order", new CommandInfo(new string[] { "client", "admin" }, ViewOrder));

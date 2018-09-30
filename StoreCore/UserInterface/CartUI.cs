@@ -6,10 +6,9 @@ using System.Linq;
 
 namespace StoreCore.UserInterface
 {
-    public class CartUI: IConsoleUI
+    public class CartUI: ConsoleUI
     {
-        
-        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
+        override public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
             commandsMap.Add("cart-add", new CommandInfo(new string[] { "client", "admin" }, Add));
             commandsMap.Add("cart-update", new CommandInfo(new string[] { "client", "admin" }, Update));

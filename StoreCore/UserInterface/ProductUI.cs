@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace StoreCore.UserInterface
 {
-    public class ProductUI : IConsoleUI
+    public class ProductUI : ConsoleUI
     {
-        
-        public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
+
+        override public void registerCommands(Dictionary<string, CommandInfo> commandsMap)
         {
             commandsMap.Add("add-product", new CommandInfo(new string[] { "admin" }, addProduct));
             commandsMap.Add("list-products", new CommandInfo(new string[] { "guest", "client", "admin" }, ListProducts));
