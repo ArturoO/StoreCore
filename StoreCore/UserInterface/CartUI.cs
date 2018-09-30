@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using StoreCore.Factory;
+using StoreCore.Entities;
 using System.Linq;
 
 namespace StoreCore.UserInterface

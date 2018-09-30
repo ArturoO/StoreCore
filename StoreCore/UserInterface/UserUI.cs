@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using StoreCore.Factory;
+using StoreCore.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace StoreCore.UserInterface

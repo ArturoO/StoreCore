@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using StoreCore.Factory;
+using StoreCore.Entities;
 
 namespace StoreCore.UserInterface
 {
