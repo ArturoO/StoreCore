@@ -36,6 +36,21 @@ namespace StoreCore.UserInterface
             return valueInt;
         }
 
+        public static decimal RequiredDecimalField()
+        {
+            var input = "";
+            decimal valueDecimal;
+            input = Console.ReadLine();
+            bool isDecimal = decimal.TryParse(input, out valueDecimal);
+            while (!isDecimal)
+            {
+                Console.WriteLine("Field is required, please enter the value.");
+                input = Console.ReadLine();
+                isDecimal = decimal.TryParse(input, out valueDecimal);
+            }
+            return valueDecimal;
+        }
+
         public static string RequiredPasswordField()
         {
             StringBuilder passwordBuilder = new StringBuilder("");

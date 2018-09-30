@@ -75,12 +75,11 @@ namespace StoreCore.UserInterface
         public void addProduct()
         {
             Console.WriteLine("Please provide product name.");
-            String productName = Console.ReadLine();
+            String productName = RequiredTextField();
             Console.WriteLine("Please provide product description.");
             String productDescription = Console.ReadLine();
             Console.WriteLine("Please provide product price.");
-            decimal productPrice;
-            Decimal.TryParse(Console.ReadLine(), out productPrice);
+            decimal productPrice = RequiredDecimalField();
             Console.WriteLine("Please provide product category.");
             String productCategory = Console.ReadLine();
 
@@ -133,7 +132,8 @@ namespace StoreCore.UserInterface
                             Console.WriteLine("Old value:");
                             Console.WriteLine(Product.Name);
                             Console.WriteLine("Specify new value:");
-                            value = Console.ReadLine();
+                            value = RequiredTextField();
+                            //value = Console.ReadLine();
                             Product.Name = value;
                             break;
                         case "description":
@@ -147,9 +147,10 @@ namespace StoreCore.UserInterface
                             Console.WriteLine("Old value:");
                             Console.WriteLine(Product.Price);
                             Console.WriteLine("Specify new value:");
-                            value = Console.ReadLine();
+                            //value = Console.ReadLine();
                             decimal price;
-                            decimal.TryParse(value, out price);
+                            //decimal.TryParse(value, out price);
+                            price = RequiredDecimalField();
                             Product.Price = price;
                             break;
                         case "category":
