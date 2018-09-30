@@ -15,6 +15,7 @@ namespace StoreCore.UserInterface
             commandsMap.Add("register", new CommandInfo(new string[] { "guest" }, Register));
             commandsMap.Add("login", new CommandInfo(new string[] { "guest" }, Login));
             commandsMap.Add("logout", new CommandInfo(new string[] {"client", "admin" }, Logout));
+            commandsMap.Add("update-profile", new CommandInfo(new string[] { "client", "admin" }, UpdateProfile));
             commandsMap.Add("list-users", new CommandInfo(new string[] { "admin" }, ListUsers));            
         }
 
@@ -70,9 +71,9 @@ namespace StoreCore.UserInterface
                 String username = RequiredTextField();
                 Console.WriteLine("Please provide password.");
                 String password = RequiredPasswordField();
-                Console.WriteLine("Please provide user gender.");
+                Console.WriteLine("Please provide your gender.");
                 String gender = Console.ReadLine();
-                Console.WriteLine("Please provide user age.");
+                Console.WriteLine("Please provide your age.");
                 int age = RequiredIntField();
                 
                 User user = new User(firstName, lastName, gender, age, username, "admin", email);
@@ -134,6 +135,80 @@ namespace StoreCore.UserInterface
         {
             UserFactory.SetCurrentUserAsGuest();
             Console.WriteLine("You were logged out.");
+        }
+
+        public void UpdateProfile()
+        {
+            using (var context = new StoreContext())
+            {
+                var User = UserFactory.GetCurrentUser();
+                
+                string[] productFields = new string[] { "first name", "last name", "email", "password", "gender", "age" };
+
+                while (true)
+                {
+                    Console.WriteLine("Which field do you want to update? " +
+                        "(Fields: " + string.Join(", ", productFields) + "). " +
+                        "Type 'update' to update. Type 'cancel' to skip update.");
+                    String input = Console.ReadLine();
+                    String value;
+
+                    if (input == "update")
+                        break;
+                    if (input == "cancel")
+                        return;
+
+                    switch (input)
+                    {
+                        case "first name":
+                            Console.WriteLine("Old value:");
+                            Console.WriteLine(User.FirstName);
+                            Console.WriteLine("Specify new value:");
+                            User.FirstName = Console.ReadLine();
+                            break;
+                        case "last name":
+                            Console.WriteLine("Old value:");
+                            Console.WriteLine(User.LastName);
+                            Console.WriteLine("Specify new value:");
+                            User.LastName = Console.ReadLine();
+                            break;
+                        case "email":
+                            Console.WriteLine("Old value:");
+                            Console.WriteLine(User.Email);
+                            Console.WriteLine("Specify new value:");
+                            User.Email = RequiredEmailField();
+                            break;
+                        case "password":
+                            Console.WriteLine("Specify new value:");
+                            User.HashPassword(RequiredPasswordField());
+                            break;
+                        case "gender":
+                            Console.WriteLine("Old value:");
+                            Console.WriteLine(User.Gender);
+                            Console.WriteLine("Specify new value:");
+                            User.Gender = Console.ReadLine();
+                            break;
+                        case "age":
+                            Console.WriteLine("Old value:");
+                            Console.WriteLine(User.Age);
+                            Console.WriteLine("Specify new value:");
+                            User.Age = RequiredIntField();
+                            break;
+                        default:
+                            Console.WriteLine("Error: Field doesn't exist, provide valid field");
+                            break;
+                    }
+                }
+
+                context.Users.Update(User);
+                var result = context.SaveChanges();
+
+                if (result>0)
+                    Console.WriteLine("User changed.");
+                else
+                    Console.WriteLine("User not changed.");
+
+            }
         }
 
         //public void addUser()
