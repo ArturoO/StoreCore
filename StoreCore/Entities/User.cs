@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -34,6 +36,18 @@ namespace StoreCore.Entities
             Username = username;
             Type = type;
             Email = email;
+        }
+
+        public void LoadCart()
+        {
+            using (var context = new StoreContext())
+            {
+                Cart = context.Carts
+                    .Include(c => c.Products)
+                    .ThenInclude(p => p.Product)
+                    .SingleOrDefault(x => x.UserId == Id);
+                Cart.UpdateSummary();
+            }
         }
 
         public void HashPassword(string password)

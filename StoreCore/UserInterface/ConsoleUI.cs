@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,6 +8,7 @@ namespace StoreCore.UserInterface
     abstract public class ConsoleUI
     {
         abstract public void registerCommands(Dictionary<string, CommandInfo> commandsMap);
+
 
         public static string RequiredTextField()
         {

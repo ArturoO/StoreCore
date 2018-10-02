@@ -108,9 +108,6 @@ namespace StoreCore.UserInterface
             using (var context = new StoreContext())
             {
                 var User = context.Users
-                    .Include(x => x.Cart)
-                    .ThenInclude(c => c.Products)
-                    .ThenInclude(p => p.Product)
                     .SingleOrDefault(x => x.Username == username);
 
                 if(User==null)
@@ -168,7 +165,6 @@ namespace StoreCore.UserInterface
                         "(Fields: " + string.Join(", ", productFields) + "). " +
                         "Type 'update' to update. Type 'cancel' to skip update.");
                     String input = Console.ReadLine();
-                    String value;
 
                     if (input == "update")
                         break;

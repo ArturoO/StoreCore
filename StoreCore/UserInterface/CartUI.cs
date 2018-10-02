@@ -4,6 +4,7 @@ using System.Text;
 using StoreCore.Factory;
 using StoreCore.Entities;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace StoreCore.UserInterface
 {
@@ -27,12 +28,16 @@ namespace StoreCore.UserInterface
 
             using (var context = new StoreContext())
             {
-                var Product = context.Products.SingleOrDefault(x => x.Id==productId);
+                var Product = context.Products
+                    .SingleOrDefault(x => x.Id==productId);
                 if(Product==null)
                 {
                     Console.WriteLine("Error: Product doesn't exists.");
                     return;
                 }
+
+                user.LoadCart();
+
                 var CartProduct = user.Cart
                     .Products
                     .SingleOrDefault(x => x.ProductId == productId);
@@ -49,11 +54,14 @@ namespace StoreCore.UserInterface
                     Console.WriteLine("Error: Quantity must be a positive number.");
                     return;
                 }
-                
-                var NewCartProduct = new CartProduct(user.Cart, Product, qty);
-                user.Cart.Products.Add(NewCartProduct);
+
+                var NewCartProduct = new CartProduct(user.Cart.Id, Product.Id, qty);
+
+                context.CartProducts.Add(NewCartProduct);
+                user.Cart.Products.Add(NewCartProduct);                
                 user.Cart.UpdateSummary();
-                context.Users.Update(user);
+                context.Carts.Update(user.Cart);
+                
                 var result = context.SaveChanges();
 
                 if (result>0)
@@ -79,6 +87,7 @@ namespace StoreCore.UserInterface
                     Console.WriteLine("Error: Product doesn't exists.");
                     return;
                 }
+                user.LoadCart();
                 var CartProduct = user.Cart
                     .Products
                     .SingleOrDefault(x => x.ProductId == productId);
@@ -97,15 +106,15 @@ namespace StoreCore.UserInterface
                 }
 
                 CartProduct.Qty = qty;
+                context.CartProducts.Update(CartProduct);
                 user.Cart.UpdateSummary();
-                context.Users.Update(user);
+                context.Carts.Update(user.Cart);
                 var result = context.SaveChanges();
 
                 if (result>0)
                     Console.WriteLine("Cart updated.");
                 else
                     Console.WriteLine("Error: Couldn't update cart.");
-
             }
         }
 
@@ -124,6 +133,9 @@ namespace StoreCore.UserInterface
                     Console.WriteLine("Error: Product doesn't exists.");
                     return;
                 }
+                
+                user.LoadCart();
+
                 var CartProduct = user.Cart
                     .Products
                     .SingleOrDefault(x => x.ProductId == productId);
@@ -133,40 +145,44 @@ namespace StoreCore.UserInterface
                     return;
                 }
 
+                context.CartProducts.Remove(CartProduct);
                 user.Cart.Products.Remove(CartProduct);
                 user.Cart.UpdateSummary();
-                context.Users.Update(user);
-
+                context.Carts.Update(user.Cart);
                 var result = context.SaveChanges();
+
                 if (result>0)
                     Console.WriteLine("Product removed from cart.");
                 else
                     Console.WriteLine("Error: Couldn't remove product from cart.");
             }
-            
         }
 
         public void View()
         {
             var User = UserFactory.GetCurrentUser();
-            var Cart = User.Cart;
-
-            Console.WriteLine("-----------------------------------------------------------");
-            Console.WriteLine(" Id        | Name      | Price     | Category  | Quantity  ");
-            Console.WriteLine("-----------------------------------------------------------");
-
-            if(Cart.Products!=null)
+            using (var context = new StoreContext())
             {
-                foreach (var cartProduct in Cart.Products)
+                User.LoadCart();                
+                var Cart = User.Cart;
+
+                Console.WriteLine("-----------------------------------------------------------");
+                Console.WriteLine(" Id        | Name      | Price     | Category  | Quantity  ");
+                Console.WriteLine("-----------------------------------------------------------");
+
+                if (Cart.Products != null)
                 {
-                    Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}",
-                       cartProduct.Product.Id, cartProduct.Product.Name, cartProduct.Product.Price, cartProduct.Product.Category, cartProduct.Qty));
-                    Console.WriteLine("-----------------------------------------------------------");
+                    foreach (var cartProduct in Cart.Products)
+                    {
+                        Console.WriteLine(String.Format(" {0,-10}| {1,-10}| {2,-10}| {3,-10}| {4,-10}",
+                           cartProduct.Product.Id, cartProduct.Product.Name, cartProduct.Product.Price, cartProduct.Product.Category, cartProduct.Qty));
+                        Console.WriteLine("-----------------------------------------------------------");
+                    }
                 }
+                Console.WriteLine(String.Format(" Items: {0,49}", Cart.Qty));
+                Console.WriteLine(String.Format(" Total: {0,49}", Cart.Price));
+                Console.WriteLine("-----------------------------------------------------------");
             }
-            Console.WriteLine(String.Format(" Items: {0,49}", Cart.Qty));
-            Console.WriteLine(String.Format(" Total: {0,49}", Cart.Price));
-            Console.WriteLine("-----------------------------------------------------------");
         }
 
         public void Checkout()
